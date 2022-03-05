@@ -3,7 +3,7 @@ function CourseCard() {
   return (
 
     <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="logo512.png" className='bg-image hover-overlay hover-zoom hover-shadow' style={{ height: '10rem' }}/>
+      <Card.Img variant="top" src="logo512.png"  style={{ height: '10rem' }}/>
       <Card.Body>
         <Card.Title>Course Title</Card.Title>
         <Card.Text>
