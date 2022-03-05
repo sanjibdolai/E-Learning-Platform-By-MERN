@@ -7,7 +7,7 @@ const Layout = () => {
   return (
     <>
       <Navigation />
-      <Container fluid className="shadow bg-light p-2 bodyContainer">
+      <Container fluid className="shadow p-2 bodyContainer">
         <Outlet />
       </Container>
       <Footer />
