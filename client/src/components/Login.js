@@ -7,7 +7,6 @@ function Login() {
     <Container className='vh-100'>
       <Row className='rounded py-5'>
         <Col className='col-lg-8'>
-        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" className="img-fluid"/>
         </Col>
         <Form className='col-lg-4 shadow-lg bg-light p-4'>
           <Form.Group className="mb-3" controlId="formBasicEmail">

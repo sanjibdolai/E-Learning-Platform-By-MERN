@@ -24,7 +24,7 @@ const Home = () => {
   ];
 
   return (
-    <Container fluid >
+    <>
       <Row>
       <Carousel variant="dark">
   <Carousel.Item>
@@ -59,7 +59,7 @@ const Home = () => {
       </MultiCarousel>
       </Row>
 
-    </Container>
+    </>
   );
 }
   

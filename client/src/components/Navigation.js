@@ -1,32 +1,9 @@
-import React from 'react';
-import { Container, Navbar, Nav, NavItem, NavDropdown, Form, FormControl, Button, Stack, Dropdown } from 'react-bootstrap';
+import { Container, Navbar, Nav, NavItem, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import AuthNav from './AuthNav';
 
 function Navigation() {
-    const isLogin = true;
-    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-        <a
-            href=""
-            ref={ref}
-            className="text-decoration-none"
-            onClick={e => {
-                e.preventDefault();
-                onClick(e);
-            }}
-        >
-            <img
-                alt=""
-                src="/user.png"
-                width="35"
-                height="35"
-                className=""
-            />
-            User Name
-            &#x25bc;
-            {children}
-        </a>
-    ));
-
+    const isLogin = false;
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
             <Container>
@@ -34,8 +11,8 @@ function Navigation() {
                     <img
                         alt="Logo"
                         src="/logo.png"
-                        width="35"
-                        height="35"
+                        width="40rem"
+                        height="40rem"
                         className=""
                     />
                 </Navbar.Brand>
@@ -74,26 +51,13 @@ function Navigation() {
                             </Link>
                         }
                         {isLogin &&
-
-                            <Dropdown>
-                                <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-                                
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu>
-                                    <Dropdown.Item eventKey="1">Red</Dropdown.Item>
-                                    <Dropdown.Item eventKey="2">Blue</Dropdown.Item>
-                                    <Dropdown.Item eventKey="3" active>
-                                        Orange
-                                    </Dropdown.Item>
-                                    <Dropdown.Item eventKey="1">Red-Orange</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                        <AuthNav/>
                         }
                     </Nav>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
+
     );
 }
 export default Navigation;
