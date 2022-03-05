@@ -59,28 +59,6 @@ const Home = () => {
       </MultiCarousel>
       </Row>
 
-
-
-      <Row className="mt-4">
-        <Col className="col-3">
-            <CourseCard/>
-            <CourseCard/>
-            <CourseCard/>
-        </Col>
-        <Col className="col-3">
-            <CourseCard/>
-            <CourseCard/>
-            <CourseCard/>
-        </Col>
-        <Col className="col-3">
-            <CourseCard/>
-            <CourseCard/>
-            <CourseCard/>
-        </Col>
-        <Col className="col-3">
-            <CourseCard/>
-        </Col>
-      </Row>
     </Container>
   );
 }
