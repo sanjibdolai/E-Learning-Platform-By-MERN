@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import AuthNav from './AuthNav';
 
 function Navigation() {
-    const isLogin = false;
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
             <Container>
@@ -42,17 +41,14 @@ function Navigation() {
                         </Form>
                     </Nav>
                     <Nav>
-                        {!isLogin &&
                             <Link
                                 className="btn btn-info"
                                 role="button"
                                 to="/login">
                                 Login
                             </Link>
-                        }
-                        {isLogin &&
+                        
                         <AuthNav/>
-                        }
                     </Nav>
                 </Navbar.Collapse>
             </Container>

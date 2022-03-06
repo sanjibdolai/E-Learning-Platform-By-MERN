@@ -6,6 +6,7 @@ import Contact from './components/Contact';
 import NoPage from './components/NoPage';
 import Login from "./components/Login";
 import SignUp from './components/SignUp';
+import Instructor from './instructor/Instructor';
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
           <Route path="login" element={<Login/>}></Route>
           <Route path="signup" element={<SignUp/>}></Route>
           <Route path="*" element={<NoPage/>}></Route>
+        </Route>
+        <Route path="/instructor" element={<Instructor/>}>
+          <Route index element={<Home />} />
         </Route>
       </Routes>
     </BrowserRouter>
