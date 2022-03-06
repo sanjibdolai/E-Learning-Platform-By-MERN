@@ -1,6 +1,7 @@
-import { Container, Navbar, Nav, NavItem, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
+import { Container, Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import AuthNav from './AuthNav';
+import SearchBar from './SearchBar';
 
 function Navigation() {
     return (
@@ -30,25 +31,20 @@ function Navigation() {
                             <NavDropdown.Item href="#action/3.4">Advance Excel</NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link as={Link} to="/about">About</Nav.Link>
-                        <Form className="d-flex mx-lg-5">
-                            <FormControl
-                                type="search"
-                                placeholder="Search..."
-                                className=""
-                                aria-label="Search"
-                            />
-                            <Button variant="outline-success">Search</Button>
-                        </Form>
+                        <NavItem className="ms-lg-5">
+                            <SearchBar/>
+                        </NavItem>
+
                     </Nav>
                     <Nav>
-                            <Link
-                                className="btn btn-info"
-                                role="button"
-                                to="/login">
-                                Login
-                            </Link>
-                        
-                        <AuthNav/>
+                        <Link
+                            className="btn btn-info"
+                            role="button"
+                            to="/login">
+                            Login
+                        </Link>
+
+                        <AuthNav />
                     </Nav>
                 </Navbar.Collapse>
             </Container>

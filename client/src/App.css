@@ -3,7 +3,7 @@
     padding-top: 0.5625rem;
 }
 .navbar .userProfileName{
-    color: #606c8a;
+    color: #606c8a; 
     font-weight: 500;
     font-size: 14px;
     letter-spacing: .23px;
@@ -24,3 +24,11 @@
     background: linear-gradient(to bottom, #00ff99 0%, #33cccc 100%);
 }
 
+.sidenav {
+    height: 100%;
+    position: fixed;
+    z-index:9999;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+}

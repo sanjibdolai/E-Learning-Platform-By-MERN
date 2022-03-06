@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { Dropdown, Stack } from "react-bootstrap";
 
-function AuthNav() {
+function AuthNav(props) {
     const [isHovered, setIsHovered] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
-
+    console.log("AuthNav");
     const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         <a
             href=""
@@ -23,7 +23,7 @@ function AuthNav() {
                     height="40rem"
                     className="rounded-pill"
                 />
-                <span className='userProfileName'>User Name Demo</span>
+                <span className='userProfileName'>{props.userDetails.name}</span>
                 {children}
             </Stack>
            
@@ -49,4 +49,4 @@ function AuthNav() {
         </Dropdown>
     );
 }
-export default AuthNav;
+export default memo(AuthNav);

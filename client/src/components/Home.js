@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Container, Row, Col, Carousel } from "react-bootstrap";
 import MultiCarousel from 'react-elastic-carousel';
 import CourseCard from "./CourseCard";
