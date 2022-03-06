@@ -34,12 +34,11 @@ function UserLayout(props) {
             window.removeEventListener('resize',handleResize);
     };
     },[]);
-    const menuItems = props.menuItems;
 
     return (
         <>
             <div id="sidenav" className="sidenav m-0 p-0">
-                <SideBar menuItems={menuItems} sideBarProps={sideBarProps} />
+                <SideBar menuItems={props.menuItems} sideBarProps={sideBarProps} />
             </div>
 
             <div id="mainDiv" style={{ "margin-left": sideBarProps.width + 'px' }}>

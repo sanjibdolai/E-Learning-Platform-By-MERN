@@ -44,7 +44,7 @@ function Navigation() {
                             Login
                         </Link>
 
-                        <AuthNav />
+                        <AuthNav userDetails={{name:"Hello World"}}/>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
