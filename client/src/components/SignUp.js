@@ -1,7 +1,7 @@
 import { Form, InputGroup, Button, Container, Row, Col } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 function SignUp() {
-
+console.log("SignUp");
     return (
         <Container className="py-5">
             <Row className="justify-content-md-center">
@@ -11,7 +11,7 @@ function SignUp() {
                         <Form.Group className="mb-3" >
                             <Form.Label>Name</Form.Label>
                             <InputGroup className="mb-3">
-                                <InputGroup.Text><i class="fa-solid fa-user"></i></InputGroup.Text>
+                                <InputGroup.Text><i className="fa-solid fa-user"></i></InputGroup.Text>
                                 <Form.Control type="text" placeholder="Enter your name" />
                             </InputGroup>
 
@@ -19,7 +19,7 @@ function SignUp() {
                         <Form.Group className="mb-3" >
                             <Form.Label>Email Address</Form.Label>
                             <InputGroup className="mb-3">
-                                <InputGroup.Text><i class="fa-solid fa-at"></i></InputGroup.Text>
+                                <InputGroup.Text><i className="fa-solid fa-at"></i></InputGroup.Text>
                                 <Form.Control type="email" placeholder="name@example.com" />
                             </InputGroup>
 
@@ -27,7 +27,7 @@ function SignUp() {
                         <Form.Group className="mb-3" >
                             <Form.Label>User Type</Form.Label>
                             <InputGroup className="mb-3">
-                                <InputGroup.Text><i class="fa-solid fa-users"></i></InputGroup.Text>
+                                <InputGroup.Text><i className="fa-solid fa-users"></i></InputGroup.Text>
                                 <Form.Select >
                                     <option>Select User Type</option>
                                     <option value="Learner">Learner</option>
@@ -39,7 +39,7 @@ function SignUp() {
                         <Form.Group className="mb-3" >
                             <Form.Label>Password</Form.Label>
                             <InputGroup className="mb-3">
-                                <InputGroup.Text><i class="fa-solid fa-key"></i></InputGroup.Text>
+                                <InputGroup.Text><i className="fa-solid fa-key"></i></InputGroup.Text>
                                 <Form.Control type="password" placeholder="Enter password..." />
                             </InputGroup>
                         </Form.Group>

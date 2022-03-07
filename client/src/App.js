@@ -8,6 +8,9 @@ import Login from "./components/Login";
 import SignUp from './components/SignUp';
 import Instructor from './instructor/Instructor';
 import Demo from './components/Demo';
+import Learner from './learner/Learner';
+import Admin from './admin/Admin';
+import AddCourse from './instructor/AddCourse';
 
 function App() {
   return (
@@ -20,10 +23,27 @@ function App() {
           <Route path="signup" element={<SignUp/>}></Route>
           <Route path="*" element={<NoPage/>}></Route>
         </Route>
+        <Route path="/learner/" element={<Learner />}>
+          <Route index element={<Home />} />
+          <Route path="courses" element={<Home/>}></Route>
+          <Route path="profile" element={<Home/>}></Route>
+          <Route path="settings" element={<Home/>}></Route>
+          <Route path="*" element={<NoPage/>}></Route>
+        </Route>
         <Route path="/instructor/" element={<Instructor/>}>
           <Route index element={<Home />} />
           <Route path="courses" element={<Home/>}></Route>
-          <Route path="students" element={<Home/>}></Route>
+          <Route path="addcourse" element={<AddCourse/>}></Route>
+          <Route path="learners" element={<Home/>}></Route>
+          <Route path="profile" element={<Home/>}></Route>
+          <Route path="settings" element={<Home/>}></Route>
+          <Route path="*" element={<NoPage/>}></Route>
+        </Route>
+        <Route path="/admin/" element={<Admin/>}>
+          <Route index element={<Home />} />
+          <Route path="courses" element={<Home/>}></Route>
+          <Route path="instructors" element={<Home/>}></Route>
+          <Route path="learners" element={<Home/>}></Route>
           <Route path="profile" element={<Home/>}></Route>
           <Route path="settings" element={<Home/>}></Route>
           <Route path="*" element={<NoPage/>}></Route>

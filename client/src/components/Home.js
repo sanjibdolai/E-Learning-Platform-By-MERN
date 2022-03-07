@@ -1,8 +1,10 @@
-import { Container, Row, Col, Carousel } from "react-bootstrap";
+import { memo } from "react";
+import {  Row,  Carousel } from "react-bootstrap";
 import MultiCarousel from 'react-elastic-carousel';
 import CourseCard from "./CourseCard";
 
-const Home = () => {
+function Home (){
+  console.log("Home");
   const items = [
     { id: 1, title: 'item #1' },
     { id: 2, title: 'item #2' },
@@ -54,7 +56,7 @@ const Home = () => {
 
       <Row className="mt-4">
         <MultiCarousel breakPoints={breakPoints}>
-          {items.map(item => <CourseCard />)}
+          {items.map((item,index) => <CourseCard key={index}/>)}
         </MultiCarousel>
       </Row>
 
@@ -62,4 +64,4 @@ const Home = () => {
   );
 }
 
-export default Home;
+export default memo(Home);

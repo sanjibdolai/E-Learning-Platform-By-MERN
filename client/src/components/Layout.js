@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Container } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
@@ -7,7 +8,7 @@ const Layout = () => {
   return (
     <>
       <Navigation />
-      <Container fluid className="shadow p-2 bodyContainer">
+      <Container fluid className="py-2 bodyContainer">
         <Outlet />
       </Container>
       <Footer />
@@ -15,4 +16,4 @@ const Layout = () => {
   )
 };
 
-export default Layout;
+export default memo(Layout);

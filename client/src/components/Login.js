@@ -1,10 +1,11 @@
 
-import { Form, InputGroup, FormControl, Button, Container, Row, Col } from 'react-bootstrap';
+import { memo } from 'react';
+import { Form, InputGroup,  Button, Container, Row, Col } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 function Login() {
-
+console.log("Login");
   return (
-    <Container fluid className="py-5 loginPage">
+    <Container fluid className="py-5">
       <Row className="justify-content-md-center">
         <Col lg="4" className="shadow-lg p-4">
           <h3 className='text-center'>User Login</h3>
@@ -12,7 +13,7 @@ function Login() {
             <Form.Group className="mb-3" >
               <Form.Label>Email Address</Form.Label>
               <InputGroup className="mb-3">
-                <InputGroup.Text><i class="fa-solid fa-at"></i></InputGroup.Text>
+                <InputGroup.Text><i className="fa-solid fa-at"></i></InputGroup.Text>
                 <Form.Control type="email" placeholder="name@example.com" />
               </InputGroup>
 
@@ -20,7 +21,7 @@ function Login() {
             <Form.Group className="mb-3" >
               <Form.Label>Password</Form.Label>
               <InputGroup className="mb-3">
-                <InputGroup.Text><i class="fa-solid fa-key"></i></InputGroup.Text>
+                <InputGroup.Text><i className="fa-solid fa-key"></i></InputGroup.Text>
                 <Form.Control type="password" placeholder="Enter password..." />
               </InputGroup>
             </Form.Group>
@@ -40,4 +41,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default memo(Login);

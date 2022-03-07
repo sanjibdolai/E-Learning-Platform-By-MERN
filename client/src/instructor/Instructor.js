@@ -5,11 +5,12 @@ function Instructor() {
     const menuItems = [
         { itemName: "Dashboard", itemURL: "/instructor", iconClass: "fas fa-tachometer-alt" },
         { itemName: "My Courses", itemURL: "/instructor/courses", iconClass: "fa-brands fa-audible" },
-        { itemName: "Students", itemURL: "/instructor/students", iconClass: "fa-solid fa-graduation-cap" },
+        { itemName: "Add Course", itemURL: "/instructor/addcourse", iconClass: "fa fa-plus" },
+        { itemName: "Learners", itemURL: "/instructor/learners", iconClass: "fa-solid fa-graduation-cap" },
         { itemName: "Profile", itemURL: "/instructor/profile", iconClass: "far fa-address-card" },
         { itemName: "Settings", itemURL: "/instructor/settings", iconClass: "fas fa-cogs" }
     ];
-    const userDetails={name:"Sanjib Dolai"}
+    const userDetails={name:"Sanjib Instructor"}
     return (
         <>
         <UserLayout menuItems={menuItems} userDetails={userDetails}/>

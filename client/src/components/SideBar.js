@@ -1,29 +1,23 @@
-import { memo ,useContext} from "react";
+import { memo } from "react";
 import { Nav, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Logo from './Logo';
 function SideBar(props) {
   const spanHide = props.sideBarProps.spanHide;
   const menuItems = props.menuItems;
-  const tooltipShow=props.sideBarProps.tooltipShow;
-  console.log(props);
+  console.log("SideBar");
   return (
     <>
       <div className="d-flex flex-column flex-shrink-0 p-2 text-white bg-dark h-100" style={{ width: props.sideBarProps.width + 'px' }}>
         <Link to="/" className="d-flex align-items-center text-white text-decoration-none px-2">
-          <img
-            alt="Logo"
-            src="/logo.png"
-            width="35rem"
-            height="35rem"
-            className=""
-          />
+          <Logo width="35rem" height="35rem" />
           <span className={'fs-4 ms-3 ' + spanHide}>E-Learning</span>
         </Link>
         <hr className="mb-5" />
-        <Nav variant="pills" defaultActiveKey="0" className="flex-column mb-auto">
+        <Nav variant="pills" defaultActiveKey="0" className="flex-column mb-auto" >
 
           {menuItems.map((item, index) =>
-            <Nav.Item >
+            <Nav.Item key={index}>
               <OverlayTrigger
                 placement="right"
                 key={index}

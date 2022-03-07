@@ -1,7 +1,8 @@
+import { memo } from "react";
 import { Button, Card } from "react-bootstrap";
-function CourseCard() {
+function CourseCard(props) {
+  //console.log("CourseCard");
   return (
-
     <Card style={{ width: '18rem' }}>
       <Card.Img variant="top" src="logo512.png"  style={{ height: '10rem' }}/>
       <Card.Body>
@@ -15,4 +16,4 @@ function CourseCard() {
     </Card>
   );
 }
-export default CourseCard;
+export default memo(CourseCard);

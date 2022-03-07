@@ -1,21 +1,23 @@
-import { Col, Container, Nav, Navbar, NavDropdown, NavItem, NavLink, Row } from "react-bootstrap";
-import { Link, Outlet } from "react-router-dom";
+import { Container, Nav, Navbar} from "react-bootstrap";
+import { Outlet } from "react-router-dom";
 import { memo, useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
 import AuthNav from "../components/AuthNav";
 import SearchBar from "../components/SearchBar";
 
 function UserLayout(props) {
+    console.log("UserLayout");
+    console.log(props);
     const [sideBarProps, setSideBarProps] = useState({ width: 250, spanHide: '', tooltipShow: false });
     const [arrowIcon,setArrowIcon]=useState("fa-angle-double-left");
     const sideBarPropsChange = () => {
-        if (sideBarProps.width == 250){
+        if (sideBarProps.width === 250){
             setArrowIcon("fa-angle-double-right");
-            setSideBarProps({ width: 70, spanHide: "d-none", tooltipShow: false });
+            setSideBarProps({ width: 70, spanHide: "d-none"});
         }
         else{
             setArrowIcon("fa-angle-double-left");
-            setSideBarProps({ width: 250, spanHide: "", tooltipShow: true });
+            setSideBarProps({ width: 250, spanHide: ""});
         }
             
     };
@@ -23,10 +25,10 @@ function UserLayout(props) {
         const handleResize=()=>{
             if(window.innerWidth<767){
                 setArrowIcon("fa-angle-double-right");
-                setSideBarProps({ width: 70, spanHide: "d-none", tooltipShow: false });
+                setSideBarProps({ width: 70, spanHide: "d-none"});
             }else{
                 setArrowIcon("fa-angle-double-left");
-                setSideBarProps({ width: 250, spanHide: "", tooltipShow: true });
+                setSideBarProps({ width: 250, spanHide: ""});
             }
         };
         window.addEventListener('resize',handleResize);
@@ -41,7 +43,7 @@ function UserLayout(props) {
                 <SideBar menuItems={props.menuItems} sideBarProps={sideBarProps} />
             </div>
 
-            <div id="mainDiv" style={{ "margin-left": sideBarProps.width + 'px' }}>
+            <div id="mainDiv" style={{ "marginLeft": sideBarProps.width + 'px' }}>
                 <Navbar bg="light" variant="light" className="ps-2">
                     <a className="me-auto" onClick={sideBarPropsChange} >
                         <i className={"fas "+arrowIcon}></i>

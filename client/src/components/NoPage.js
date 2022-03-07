@@ -1,6 +1,8 @@
+import { memo } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
 const NoPage = () => {
+  console.log("NoPage");
     return (
       <Container >
         <Row >
@@ -12,4 +14,4 @@ const NoPage = () => {
     );
   };
   
-  export default NoPage;
+  export default memo(NoPage);
