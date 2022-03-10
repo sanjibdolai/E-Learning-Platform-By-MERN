@@ -4,6 +4,7 @@ import { CKEditor } from 'ckeditor4-react';
 import Select from 'react-select';
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
+
 function AddCourse() {
     const category = [
         { value: 'Programming Language', label: 'Programming Language' },
