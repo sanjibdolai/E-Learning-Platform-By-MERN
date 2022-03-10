@@ -1,9 +1,9 @@
 import { memo, useState, useRef } from "react";
 import { Container, Col, Row, Form, InputGroup, Button } from "react-bootstrap";
-import { CKEditor } from 'ckeditor4-react';
 import Select from 'react-select';
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
+import AddChapter from "./AddChapter"
 
 function AddCourse() {
     const category = [
@@ -30,8 +30,13 @@ function AddCourse() {
         //console.log(cropper.getCroppedCanvas().toDataURL());
     };
 
+    const [chapters, setChapters] = useState([]);
+    const handleChaptersAddClick = () => {
+        setChapters([...chapters, { chapter: "abc" }]);
+    };
+
     return (
-        <Container>
+        <Container fluid>
             <Row className="border p-2">
                 <Col lg={6}>
                     <Form.Group className="mb-3" >
@@ -56,19 +61,19 @@ function AddCourse() {
                     <Form.Group as={Row} className="mb-3">
                         <Form.Label>Course Price</Form.Label>
                         <Col xs="4" className="pt-2">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
-                                <label class="form-check-label" for="inlineRadio1">Free</label>
+                            <div className="form-check form-check-inline">
+                                <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
+                                <label className="form-check-label" >Free</label>
                             </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
-                                <label class="form-check-label" for="inlineRadio2">Paid</label>
+                            <div className="form-check form-check-inline">
+                                <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
+                                <label className="form-check-label" >Paid</label>
                             </div>
                         </Col>
                         <Col xs="6">
                             <InputGroup>
                                 <Form.Control type="text" placeholder="Enter Course Price" />
-                                <InputGroup.Text id="basic-addon1"><i class="fa-solid fa-rupee-sign"></i></InputGroup.Text>
+                                <InputGroup.Text id="basic-addon1"><i className="fa-solid fa-rupee-sign"></i></InputGroup.Text>
                             </InputGroup>
                         </Col>
                     </Form.Group>
@@ -95,56 +100,16 @@ function AddCourse() {
 
                 </Col>
             </Row>
-            <Row className="border p-2 mt-2">
-                <Col lg={6}>
-                    <Form.Group className="mb-3" >
-                        <Form.Label>Chapter/ Topic Title</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Title Here..." />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Course Content</Form.Label>
-                        <CKEditor
-                            initData={""}
-                            onInstanceReady={() => {
-                                console.log('Editor is ready!');
-                            }}
-                        />
-                    </Form.Group>
-                </Col>
-                <Col lg={6}>
-                <Form.Group as={Row} className="mb-3">
-                        <Form.Label>Videos Upload</Form.Label>
-                        <Col xs='9'>
-                        <Form.Control type="file" />
-                        </Col>
-                        <Col xs='3'>
-                            <Button variant="outline-info" size="sm"><i class="fa fa-plus"></i> Add More</Button>
-                        </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3">
-                        <Form.Label>Notes Upload</Form.Label>
-                        <Col xs='9'>
-                        <Form.Control type="file" />
-                        </Col>
-                        <Col xs='3'>
-                            <Button variant="outline-info" size="sm"><i class="fa fa-plus"></i> Add More</Button>
-                        </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3" >
-                        <Form.Label>Important Links</Form.Label>
-                        <Col xs='9'>
-                            <Form.Control type="text" placeholder="Link Paste Here..." />
-                        </Col>
-                        <Col xs='3'>
-                            <Button variant="outline-info" size="sm"><i class="fa fa-plus"></i> Add More</Button>
-                        </Col>
+            <AddChapter />
+            {chapters.map((item, index) => {
+                return <AddChapter key={index} />;
+            }
+            )}
 
-                    </Form.Group>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                <Button variant="info" ><i class="fa fa-plus"></i> Add A New Chapter</Button>
+
+            <Row className="border p-2 mt-2">
+                <Col className="text-center">
+                    <Button variant="info" onClick={handleChaptersAddClick}><i className="fa fa-plus"></i> Add A New Chapter</Button>
                 </Col>
             </Row>
         </Container >
