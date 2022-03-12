@@ -36,3 +36,49 @@
 .spanRemoveBtn:hover i{
     color: #ff6600;
 }
+
+
+.dashboard-cards .ibox-content {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0px 2px 3px rgb(0 0 0 / 40%);
+    color: white !important;
+    font-weight: bold;
+    border: 0.5px solid white;
+    padding: 10px 10px;
+}
+.dashboard-cards .ibox-content:hover {
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+    transform: scale(1.01);
+}
+.dashboard-cards h5{
+    font-size: 1.5rem;
+    margin-bottom:2px;
+}
+.dashboard-cards h1{
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom:0;
+}
+.dashboard-cards h4{
+    margin-top:0;
+    font-size: small;
+}
+.dashboard-cards .lm-icon-size{
+    width: 5rem;
+    height: 5rem;
+    filter: invert(100%);
+}
+
+.dashboard-cards .service-card{
+    background-color: #9079ad;
+}
+.dashboard-cards .service-zone-card{
+    background-color: #71cda3;
+}
+.dashboard-cards .employee-card{
+    background-color: #e96962;
+}
+.dashboard-cards .revenue-card{
+    background-color: #ffbf00;
+}
