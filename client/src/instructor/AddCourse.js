@@ -4,7 +4,6 @@ import Select from 'react-select';
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import AddChapter from "./AddChapter"
-
 function AddCourse() {
     const category = [
         { value: 'Programming Language', label: 'Programming Language' },

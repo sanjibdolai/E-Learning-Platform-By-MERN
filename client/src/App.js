@@ -12,6 +12,7 @@ import Learner from './learner/Learner';
 import Admin from './admin/Admin';
 import AddCourse from './instructor/AddCourse';
 import LearnersTable from './instructor/LearnersTable';
+import InstructorDashboard from './instructor/Dashboard';
 
 function App() {
   return (
@@ -32,13 +33,14 @@ function App() {
           <Route path="*" element={<NoPage/>}></Route>
         </Route>
         <Route path="/instructor/" element={<Instructor/>}>
-          <Route index element={<Home />} />
+          <Route index element={<InstructorDashboard/>} />
           <Route path="courses" element={<Home/>}></Route>
           <Route path="addcourse" element={<AddCourse/>}></Route>
           <Route path="learners" element={<LearnersTable/>}></Route>
           <Route path="profile" element={<Home/>}></Route>
           <Route path="settings" element={<Home/>}></Route>
           <Route path="*" element={<NoPage/>}></Route>
+          
         </Route>
         <Route path="/admin/" element={<Admin/>}>
           <Route index element={<Home />} />
