@@ -32,3 +32,7 @@
     left: 0;
     overflow-x: hidden;
 }
+
+.spanRemoveBtn:hover i{
+    color: #ff6600;
+}

@@ -30,10 +30,16 @@ function AddCourse() {
         //console.log(cropper.getCroppedCanvas().toDataURL());
     };
 
-    const [chapters, setChapters] = useState([]);
+    const [chapters, setChapters] = useState([{ chapter: "" }]);
     const handleChaptersAddClick = () => {
         setChapters([...chapters, { chapter: "abc" }]);
     };
+
+    const handleChapterRemoveClick=(index) =>{
+        const list = [...chapters];
+        list.splice(index, 1);
+        setChapters(list);
+    }
 
     return (
         <Container fluid>
@@ -100,16 +106,29 @@ function AddCourse() {
 
                 </Col>
             </Row>
-            <AddChapter />
             {chapters.map((item, index) => {
-                return <AddChapter key={index} />;
+                return (
+                    <Row key={index} className="border p-2 mt-2">
+                        <Col >
+                            <Row className="text-end">
+                                {index!==0 &&
+                                    <span className="text-danger spanRemoveBtn" onClick={() => handleChapterRemoveClick(index)}><i className="far fa-times-circle fs-5"></i></span>
+                                }
+                            </Row>
+                            <Row>
+                                <AddChapter key={index} />
+                            </Row>
+                        </Col>
+                    </Row>
+                );
             }
             )}
 
 
             <Row className="border p-2 mt-2">
-                <Col className="text-center">
-                    <Button variant="info" onClick={handleChaptersAddClick}><i className="fa fa-plus"></i> Add A New Chapter</Button>
+                <Col className="text-end">
+                    <Button variant="success" onClick={handleChaptersAddClick}><i className="fa fa-plus"></i> Add A New Chapter</Button>
+                    <Button variant="info" className="ms-4"><i className="fas fa-save"></i> Save</Button>
                 </Col>
             </Row>
         </Container >

@@ -32,7 +32,7 @@ function AddChapter() {
     };
     return (
         <>
-            <Row className="border p-2 mt-2">
+            <Row>
                 <Col lg={6}>
                     <Form.Group className="mb-3" >
                         <Form.Label>Chapter/ Topic Title</Form.Label>
@@ -65,7 +65,7 @@ function AddChapter() {
                                     <Form.Control type="file" />
                                 </Col>
                                 <Col xs='3'>
-                                    <span className="text-danger align-middle" onClick={() => handleVideosRemoveClick(index)} ><i className="far fa-times-circle align-middle fs-5"></i></span>
+                                    <span className="text-danger spanRemoveBtn align-middle" onClick={() => handleVideosRemoveClick(index)} ><i className="far fa-times-circle align-middle fs-5"></i></span>
                                 </Col>
                             </Form.Group>
                         );
@@ -86,7 +86,7 @@ function AddChapter() {
                                     <Form.Control type="file" />
                                 </Col>
                                 <Col xs='3'>
-                                    <span className="text-danger align-middle" onClick={() => handleFilesRemoveClick(index)} ><i className="far fa-times-circle align-middle fs-5"></i></span>
+                                    <span className="text-danger spanRemoveBtn align-middle" onClick={() => handleFilesRemoveClick(index)} ><i className="far fa-times-circle align-middle fs-5"></i></span>
                                 </Col>
                             </Form.Group>
                         );
@@ -108,14 +108,12 @@ function AddChapter() {
                                     <Form.Control type="text" placeholder="Link Paste Here..." />
                                 </Col>
                                 <Col xs='3'>
-                                    <span className="text-danger align-middle" onClick={() => handleImportantLinksRemoveClick(index)} ><i className="far fa-times-circle align-middle fs-5"></i></span>
+                                    <span className="text-danger spanRemoveBtn align-middle" onClick={() => handleImportantLinksRemoveClick(index)} ><i className="far fa-times-circle align-middle fs-5"></i></span>
                                 </Col>
                             </Form.Group>
                         );
                     })}
                 </Col>
-            </Row>
-            <Row>
             </Row>
         </>
     );

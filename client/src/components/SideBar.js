@@ -5,7 +5,7 @@ import Logo from './Logo';
 function SideBar(props) {
   const spanHide = props.sideBarProps.spanHide;
   const menuItems = props.menuItems;
-  console.log("SideBar");
+  console.log(window.location.pathname);
   return (
     <>
       <div className="d-flex flex-column flex-shrink-0 p-2 text-white bg-dark h-100" style={{ width: props.sideBarProps.width + 'px' }}>
@@ -14,7 +14,7 @@ function SideBar(props) {
           <span className={'fs-4 ms-3 ' + spanHide}>E-Learning</span>
         </Link>
         <hr className="mb-5" />
-        <Nav variant="pills" defaultActiveKey="0" className="flex-column mb-auto" >
+        <Nav variant="pills" defaultActiveKey={window.location.pathname} className="flex-column mb-auto" >
 
           {menuItems.map((item, index) =>
             <Nav.Item key={index}>
@@ -27,7 +27,7 @@ function SideBar(props) {
                   </Tooltip>
                 }
               >
-                <Nav.Link as={Link} eventKey={index} to={item.itemURL} className="pe-1">
+                <Nav.Link as={Link} eventKey={item.itemURL} to={item.itemURL} className="pe-1">
                   <i className={'fs-5 ' + item.iconClass}></i>
                   <span className={'ms-3 ' + spanHide}>{item.itemName}</span>
                 </Nav.Link>
