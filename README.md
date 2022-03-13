@@ -1,1 +1,1 @@
-# E-Learning-Platform-By-MERN
+# E-Learning-Platform-Using-MERN
