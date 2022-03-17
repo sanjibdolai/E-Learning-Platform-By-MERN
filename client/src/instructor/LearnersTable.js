@@ -1,51 +1,45 @@
 import { useMemo } from "react";
 import MyTable from "../components/MyTable";
-
+function Photo(){
+  return (
+    <>
+   <img
+                        alt="Logo"
+                        src="/logo.png"
+                        width={30}
+                        height={30}
+                    />
+    </>
+  );
+}
 function LearnersTable(){
     const columns = useMemo(
         () => [
           {
-            Header: 'Name',
-            columns: [
-              {
-                Header: 'First Name',
-                accessor: 'firstName',
-              },
-              {
-                Header: 'Last Name',
-                accessor: 'lastName',
-              },
-            ],
+            Header: '',
+            accessor: 'image',
           },
           {
-            Header: 'Info',
-            columns: [
-              {
-                Header: 'Age',
-                accessor: 'age',
-              },
-              {
-                Header: 'Visits',
-                accessor: 'visits',
-              },
-              {
-                Header: 'Status',
-                accessor: 'status',
-              },
-              {
-                Header: 'Profile Progress',
-                accessor: 'progress',
-              },
-            ],
+            Header: 'Learner Name',
+            accessor: 'learnerName',
           },
+          {
+            Header: 'Email',
+            accessor: 'email',
+          }
+          
         ],
         []
-      )
+      );
     
-      const data = useMemo(() => [], [])
+    var arr=[];
+    for(var i=1;i<100;i++){
+      arr.push({image:Photo(),learnerName:"Sanjib Dolai",email:"fsdfs"},)
+    }
+      const data = useMemo(() => arr, [])
 
     return(
-        <MyTable columns={columns} data={data}/>
+        <MyTable  columns={columns} data={data}/>
     );
 }
 export default LearnersTable;

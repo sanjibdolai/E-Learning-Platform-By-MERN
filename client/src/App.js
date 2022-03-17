@@ -13,6 +13,8 @@ import Admin from './admin/Admin';
 import AddCourse from './instructor/AddCourse';
 import LearnersTable from './instructor/LearnersTable';
 import InstructorDashboard from './instructor/Dashboard';
+import InstructorProfile from './instructor/Profile';
+import InstructorCourses from './instructor/MyCourses';
 
 function App() {
   return (
@@ -34,10 +36,10 @@ function App() {
         </Route>
         <Route path="/instructor/" element={<Instructor/>}>
           <Route index element={<InstructorDashboard/>} />
-          <Route path="courses" element={<Home/>}></Route>
+          <Route path="mycourses" element={<InstructorCourses/>}></Route>
           <Route path="addcourse" element={<AddCourse/>}></Route>
           <Route path="learners" element={<LearnersTable/>}></Route>
-          <Route path="profile" element={<Home/>}></Route>
+          <Route path="profile" element={<InstructorProfile/>}></Route>
           <Route path="settings" element={<Home/>}></Route>
           <Route path="*" element={<NoPage/>}></Route>
           

@@ -1,17 +1,19 @@
 import { memo } from 'react';
-import {Form, FormControl, Button } from 'react-bootstrap';
+import { InputGroup, FormControl, Button } from 'react-bootstrap';
 function SearchBar() {
+    const btnClick=()=>{
+        alert("hi");
+    }
     console.log("SearchBar");
     return (
-        <Form className="d-flex">
+        <InputGroup>
             <FormControl
-                type="search"
                 placeholder="Search..."
-                className=""
-                aria-label="Search"
             />
-            <Button variant="outline-success">Search</Button>
-        </Form>
+            <Button variant="outline-info" onClick={btnClick}>
+            <i className="fas fa-search"></i>
+            </Button>
+        </InputGroup>
     );
 }
 export default memo(SearchBar);

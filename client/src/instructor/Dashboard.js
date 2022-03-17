@@ -93,7 +93,7 @@ function Dashboard() {
             </div>
             <Row className="mt-2">
             {items.map((item,index) => 
-                <Col lg="3"  className="mt-3">
+                <Col lg="3" key={index}  className="mt-3">
                 <CourseCard key={index}/>
                 </Col>
             )}
