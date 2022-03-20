@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 function SearchBar() {
     const btnClick=()=>{
-        alert("hi");
+        alert("Coming Soon...");
     }
     console.log("SearchBar");
     return (

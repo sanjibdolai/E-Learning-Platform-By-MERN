@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Col,Pagination, InputGroup, Form, Row } from 'react-bootstrap';
-import Table from 'react-bootstrap/Table';
+import { Col, Pagination, InputGroup, Form, Row } from 'react-bootstrap';
 import { useTable, useGlobalFilter, useAsyncDebounce, usePagination } from 'react-table';
 
 
@@ -27,7 +26,7 @@ function GlobalFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) 
   );
 }
 
-function MyTable({ columns, data }) {
+function MyTable({ columns, data, tableProps, tableHeaderProps, tableBodyProps }) {
 
   const {
     getTableProps,
@@ -57,27 +56,25 @@ function MyTable({ columns, data }) {
     useGlobalFilter,
     usePagination
   )
-console.log(headerGroups)
-
   return (
     <>
       <Row>
         <Col lg={9}>
-          <label>
+          <label className="mb-2">
             Show{' '}
-          <select className='form-control-sm'
-            value={pageSize}
-            onChange={e => {
-              setPageSize(Number(e.target.value))
-            }}
-          >
-            {[10, 20, 30, 40, 50].map(pageSize => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
-            ))}
-          </select>
-          {' '}entries
+            <select className='form-control-sm'
+              value={pageSize}
+              onChange={e => {
+                setPageSize(Number(e.target.value))
+              }}
+            >
+              {[10, 20, 30, 40, 50].map(pageSize => (
+                <option key={pageSize} value={pageSize}>
+                  {pageSize}
+                </option>
+              ))}
+            </select>
+            {' '}entries
           </label>
         </Col>
         <Col lg={3}>
@@ -90,8 +87,8 @@ console.log(headerGroups)
       </Row>
       <Row>
         <Col xs={12}>
-          <Table striped hover className='table-light' {...getTableProps()} >
-            <thead className='table-primary'>
+          <table {...getTableProps()} {...tableProps}>
+            <thead {...tableHeaderProps}>
               {headerGroups.map(headerGroup => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map(column => (
@@ -102,14 +99,15 @@ console.log(headerGroups)
                 </tr>
               ))}
             </thead>
-            <tbody {...getTableBodyProps()}>
+            <tbody {...getTableBodyProps()} {...tableBodyProps}>
               {page.map((row, i) => {
                 prepareRow(row)
                 return (
                   <tr {...row.getRowProps()}>
                     {row.cells.map(cell => {
+
                       return (
-                        <td {...cell.getCellProps()}>
+                        <td key={cell.column.id} {...cell.getCellProps()}>
                           {cell.render('Cell')}
                         </td>
                       )
@@ -118,27 +116,23 @@ console.log(headerGroups)
                 )
               })}
             </tbody>
-          </Table>
+          </table>
+          {rows.length === 0 &&
+            <h6 className='text-center mb-3'>No data found...</h6>
+          }
         </Col>
       </Row>
       <Row>
         <Col>
-        Showing {state.pageSize*pageIndex+1} to {state.pageSize*pageIndex+state.pageSize>rows.length ? rows.length : state.pageSize*pageIndex+state.pageSize} of {rows.length} entries
+          Showing {state.pageSize * pageIndex + 1} to {state.pageSize * pageIndex + state.pageSize > rows.length ? rows.length : state.pageSize * pageIndex + state.pageSize} of {rows.length} entries
         </Col>
-        <Col>
-          <Pagination>
-            <Pagination.First onClick={() => gotoPage(0)} disabled={!canPreviousPage}/>
-            <Pagination.Prev onClick={() => previousPage()} disabled={!canPreviousPage}/>
-            <Pagination.Item>{1}</Pagination.Item>
-            <Pagination.Ellipsis />
-
-            {pageCount.map((page,i) =>console.log(i)
-            )}
-
-            <Pagination.Ellipsis />
-            <Pagination.Item>{20}</Pagination.Item>
-            <Pagination.Next onClick={() => nextPage()} disabled={!canNextPage}/>
-            <Pagination.Last onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}/>
+        <Col >
+          <Pagination className="float-end">
+            <Pagination.First onClick={() => gotoPage(0)} disabled={!canPreviousPage} />
+            <Pagination.Prev onClick={() => previousPage()} disabled={!canPreviousPage} />
+          
+            <Pagination.Next onClick={() => nextPage()} disabled={!canNextPage} />
+            <Pagination.Last onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} />
           </Pagination>
         </Col>
       </Row>

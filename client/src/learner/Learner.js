@@ -7,7 +7,7 @@ function Learner() {
         { itemName: "Profile", itemURL: "/learner/profile", iconClass: "far fa-address-card" },
         { itemName: "Settings", itemURL: "/learner/settings", iconClass: "fas fa-cogs" }
     ];
-    const userDetails={name:"Sanjib Learner"}
+    const userDetails={name:"Learner Name"}
     return (
         <>
         <UserLayout menuItems={menuItems} userDetails={userDetails}/>

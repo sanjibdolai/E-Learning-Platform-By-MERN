@@ -42,9 +42,9 @@ function AuthNav(props) {
 
             </Dropdown.Toggle>
             <Dropdown.Menu>
-                <Dropdown.Item eventKey="1">My Profile</Dropdown.Item>
-                <Dropdown.Item eventKey="2">Change Password</Dropdown.Item>
-                <Dropdown.Item eventKey="3" >Logout</Dropdown.Item>
+                <Dropdown.Item eventKey="1" onClick={()=> alert("Coming Soon...")}>My Profile</Dropdown.Item>
+                <Dropdown.Item eventKey="2" onClick={()=> alert("Coming Soon...")}>Change Password</Dropdown.Item>
+                <Dropdown.Item eventKey="3" onClick={()=> alert("Coming Soon...")}>Logout</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     );

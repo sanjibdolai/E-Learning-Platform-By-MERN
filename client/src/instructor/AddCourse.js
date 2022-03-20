@@ -4,7 +4,10 @@ import Select from 'react-select';
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import AddChapter from "./AddChapter"
+import { Link, useNavigate } from "react-router-dom";
 function AddCourse() {
+
+    const history = useNavigate();
     const category = [
         { value: 'Programming Language', label: 'Programming Language' },
         { value: 'Marketing', label: 'Marketing' },
@@ -34,7 +37,7 @@ function AddCourse() {
         setChapters([...chapters, { chapter: "abc" }]);
     };
 
-    const handleChapterRemoveClick=(index) =>{
+    const handleChapterRemoveClick = (index) => {
         const list = [...chapters];
         list.splice(index, 1);
         setChapters(list);
@@ -90,19 +93,21 @@ function AddCourse() {
                             onChange={imageChange}
                         />
                     </Form.Group>
-                    <Container style={{ height: "300px" }}>
-                        {selectedImage &&
+                    <Container className="bg-secondary shadow mb-3 p-0" style={{ height: "250px", width:"400px" }}>
+                        
                             <Cropper
-                                src={URL.createObjectURL(selectedImage)}
+                                src={selectedImage?URL.createObjectURL(selectedImage):"/demo.jpg"}
+                                alt="Banner Image"
                                 style={{ height: "100%", width: "100%" }}
                                 aspectRatio={16 / 9}
                                 guides={true}
                                 crop={onCrop}
                                 ref={cropperRef}
                             />
-                        }
-                    </Container>
+                        
 
+                    </Container>
+                    
                 </Col>
             </Row>
             {chapters.map((item, index) => {
@@ -110,7 +115,7 @@ function AddCourse() {
                     <Row key={index} className="border p-2 mt-2">
                         <Col >
                             <Row className="text-end">
-                                {index!==0 &&
+                                {index !== 0 &&
                                     <span className="text-danger spanRemoveBtn" onClick={() => handleChapterRemoveClick(index)}><i className="far fa-times-circle fs-5"></i></span>
                                 }
                             </Row>
@@ -128,9 +133,13 @@ function AddCourse() {
                 <Col className="text-end">
                     <Button variant="success" onClick={handleChaptersAddClick}><i className="fa fa-plus"></i> Add A New Chapter</Button>
                     <Button variant="info" className="ms-4"><i className="fas fa-save"></i> Save</Button>
+                    <Button variant="danger" className="ms-4" onClick={() => history(0)}>
+                        <i className="fas fa-times"></i> Cancel
+                    </Button>
                 </Col>
             </Row>
         </Container >
+
     );
 }
 export default memo(AddCourse);

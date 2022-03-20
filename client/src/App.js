@@ -15,6 +15,7 @@ import LearnersTable from './instructor/LearnersTable';
 import InstructorDashboard from './instructor/Dashboard';
 import InstructorProfile from './instructor/Profile';
 import InstructorCourses from './instructor/MyCourses';
+import Lessions from './instructor/Lessions';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path="/instructor/" element={<Instructor/>}>
           <Route index element={<InstructorDashboard/>} />
           <Route path="mycourses" element={<InstructorCourses/>}></Route>
+          <Route path="lessons" element={<Lessions/>}></Route>
           <Route path="addcourse" element={<AddCourse/>}></Route>
           <Route path="learners" element={<LearnersTable/>}></Route>
           <Route path="profile" element={<InstructorProfile/>}></Route>

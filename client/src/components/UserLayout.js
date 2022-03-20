@@ -8,16 +8,16 @@ import SearchBar from "../components/SearchBar";
 function UserLayout(props) {
     console.log("UserLayout");
     console.log(props);
-    const [sideBarProps, setSideBarProps] = useState({ width: 250, spanHide: '', tooltipShow: false });
+    const [sideBarProps, setSideBarProps] = useState({ width: 220, spanHide: '', tooltipShow: false });
     const [arrowIcon,setArrowIcon]=useState("fa-angle-double-left");
     const sideBarPropsChange = () => {
-        if (sideBarProps.width === 250){
+        if (sideBarProps.width === 220){
             setArrowIcon("fa-angle-double-right");
-            setSideBarProps({ width: 70, spanHide: "d-none"});
+            setSideBarProps({ width: 55, spanHide: "d-none"});
         }
         else{
             setArrowIcon("fa-angle-double-left");
-            setSideBarProps({ width: 250, spanHide: ""});
+            setSideBarProps({ width: 220, spanHide: ""});
         }
             
     };
@@ -25,10 +25,10 @@ function UserLayout(props) {
         const handleResize=()=>{
             if(window.innerWidth<767){
                 setArrowIcon("fa-angle-double-right");
-                setSideBarProps({ width: 70, spanHide: "d-none"});
+                setSideBarProps({ width: 55, spanHide: "d-none"});
             }else{
                 setArrowIcon("fa-angle-double-left");
-                setSideBarProps({ width: 250, spanHide: ""});
+                setSideBarProps({ width: 220, spanHide: ""});
             }
         };
         window.addEventListener('resize',handleResize);
