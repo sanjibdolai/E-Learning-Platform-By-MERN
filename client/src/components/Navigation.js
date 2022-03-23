@@ -1,14 +1,18 @@
-import { memo } from 'react';
+import { memo, useContext } from 'react';
 import { Container, Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import AuthNav from './AuthNav';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
+import { UserContext } from '../App';
 
 function Navigation() {
+
+    const { state, dispatch } = useContext(UserContext);
+
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-            <Container>
+            <Container fluid className="px-3">
                 <Navbar.Brand as={Link} to="/">
                     <Logo width="40rem" height="40rem" />
                 </Navbar.Brand>
@@ -33,14 +37,24 @@ function Navigation() {
 
                     </Nav>
                     <Nav>
-                        <Link
-                            className="btn btn-info"
-                            role="button"
-                            to="/login">
-                            Login
-                        </Link>
-
-                        <AuthNav userDetails={{ name: "Hello World" }} />
+                        {!state.isLoggedIn ?
+                            <Link
+                                className="btn btn-info"
+                                role="button"
+                                to="/login">
+                                Login
+                            </Link>
+                            :
+                            <AuthNav />
+                        }
+                        {state.userType === "INSTRUCTOR" &&
+                            <Link
+                                className="btn btn-outline-success ms-3"
+                                role="button"
+                                to="/Instructor">
+                                Dashboard
+                            </Link>
+                        }
                     </Nav>
                 </Navbar.Collapse>
             </Container>
