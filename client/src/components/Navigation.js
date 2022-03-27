@@ -31,7 +31,7 @@ function Navigation() {
                             <NavDropdown.Item href="#action/3.4">Advance Excel</NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link as={Link} to="/about" >About</Nav.Link>
-                        <NavItem className="ms-lg-5">
+                        <NavItem className="ms-lg-5" >
                             <SearchBar />
                         </NavItem>
 
