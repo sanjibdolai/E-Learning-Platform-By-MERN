@@ -48,7 +48,7 @@ function Instructor() {
             subMenu: [
                 { subItemName: "My Courses", subItemURL: "/instructor/mycourses", subItemIcon: "fa-solid fa-book-open-reader" },
                 { subItemName: "Add Course", subItemURL: "/instructor/addcourse", subItemIcon: "fas fa-folder-plus" },
-                { subItemName: "Lessions", subItemURL: "/instructor/lessons", subItemIcon: "fas fa-plus-circle" },
+                // { subItemName: "Lessions", subItemURL: "/instructor/lessons", subItemIcon: "fas fa-plus-circle" },
 
             ]
         },

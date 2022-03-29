@@ -245,3 +245,13 @@
 .sidebar-nav .dropdown-menu.show .submenu-icon::before{
     content: "\f102"!important;
 }
+
+.modal-1000w{
+    width: 1000px !important;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.modal-body-86vh{
+    max-height: 79vh;
+    overflow: auto;
+}

@@ -45,7 +45,9 @@ export const AllRoutes=()=> {
       <Route path="/learner/course" element={<Course />}></Route>
 
 
-      <Route path="/instructor/" element={(state.isLoggedIn && state.userType === 'INSTRUCTOR')?<Instructor />:<Navigate replace to="/login" />}>
+    {/* <Route path="/instructor/" element={(state.isLoggedIn && state.userType === 'INSTRUCTOR')?<Instructor />:<Navigate replace to="/login" />}> */}
+    <Route path="/instructor/" element={<Instructor />}>
+        
         <Route index element={<InstructorDashboard />} />
         <Route path="mycourses" element={<InstructorCourses />}></Route>
         <Route path="lessons" element={<Lessions />}></Route>
