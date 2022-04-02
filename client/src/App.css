@@ -255,3 +255,16 @@
     max-height: 79vh;
     overflow: auto;
 }
+
+.status-indicator-style {
+    position: absolute;
+    font-size: 10px !important;
+    left: -12px;
+    top: 15px;
+    border-top-right-radius: 12px;
+    transform: rotate(-42deg);
+    width: 70px;
+    text-align: center;
+    border-top-left-radius: 17px;
+    border-bottom-right-radius: 20px;
+}

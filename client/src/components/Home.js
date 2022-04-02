@@ -1,5 +1,5 @@
-import { memo } from "react";
-import {  Row,  Carousel } from "react-bootstrap";
+import { memo, useEffect, useState } from "react";
+import {  Row,  Carousel,Col } from "react-bootstrap";
 import MultiCarousel from 'react-elastic-carousel';
 import CourseCard from "./CourseCard";
 
@@ -23,6 +23,35 @@ function Home (){
     { width: 768, itemsToShow: 3 },
     { width: 1200, itemsToShow: 4 },
   ];
+  const [courses, setCourses] = useState([]);
+
+    const getCourses = async () => {
+        try {
+            const res = await fetch("/courses", {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+            });
+
+            if (!res.status === 200) {
+                throw new Error(res.error)
+            }
+            const data = await res.json();
+            console.log(data);
+            setCourses([ ...data ]);
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    useEffect(() => {
+        getCourses();
+    }, []);
+
 
   return (
     <>
@@ -56,10 +85,12 @@ function Home (){
 
       <Row className="mt-4">
         <MultiCarousel breakPoints={breakPoints}>
-          {items.map((item,index) => <CourseCard key={index}/>)}
+          {courses.map((item,index) => <CourseCard key={index} item={item}/>)}
         </MultiCarousel>
       </Row>
-
+      <Row className="mt-4">
+          {courses.map((item,index) => <Col lg="3"><CourseCard key={index} item={item}/></Col>)}
+      </Row>
     </>
   );
 }

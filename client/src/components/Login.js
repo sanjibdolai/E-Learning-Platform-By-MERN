@@ -2,6 +2,7 @@ import { memo, useContext, useState } from 'react';
 import { Form, InputGroup, Button, Container, Row, Col } from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from '../App';
+import swal from 'sweetalert';
 function Login() {
 
   const { state, dispatch } = useContext(UserContext);
@@ -35,11 +36,20 @@ function Login() {
       alert(data.error);
       console.log("Invalid Login.");
     } else {
-      alert("Login Successfull.");
-      console.log(data)
+      
       if (data.userType === 'Instructor') {
         dispatch({ type: 'INSTRUCTOR_LOGIN' });
-        navigate('/instructor');
+        swal("Dear Instructor!", "Login Successfull", "success").then((value) => {
+          navigate("/instructor");
+        });
+        
+      }
+      if (data.userType === 'Learner') {
+        dispatch({ type: 'LEARNER_LOGIN' });
+        swal("Dear Learner!", "Login Successfull", "success").then((value) => {
+          navigate("/learner");
+        });
+        
       }
     }
   }

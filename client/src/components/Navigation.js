@@ -12,7 +12,7 @@ function Navigation() {
 
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-            <Container fluid className="px-3">
+            <Container fluid className="px-5">
                 <Navbar.Brand as={Link} to="/">
                     <Logo width="40rem" height="40rem" />
                 </Navbar.Brand>
@@ -36,7 +36,7 @@ function Navigation() {
                         </NavItem>
 
                     </Nav>
-                    <Nav>
+                    <Nav className='my-sm-3 my-lg-auto'>
                         {!state.isLoggedIn ?
                             <Link
                                 className="btn btn-info"
@@ -49,7 +49,7 @@ function Navigation() {
                         }
                         {state.userType === "INSTRUCTOR" &&
                             <Link
-                                className="btn btn-outline-success ms-3"
+                                className="btn btn-outline-success ms-3 mt-sm-3 mt-lg-auto"
                                 role="button"
                                 to="/Instructor">
                                 Dashboard

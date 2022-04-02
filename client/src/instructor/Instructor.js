@@ -23,8 +23,14 @@ function Instructor() {
                 throw new Error(res.error)
             } 
             const data = await res.json();
-            setUserDetails(data);
             console.log(data);
+            if(data.userType==="Instructor"){
+                setUserDetails(data);
+            }
+            else{
+                navigate("/");
+            }
+            
 
         } catch (error) {
             console.log(error);

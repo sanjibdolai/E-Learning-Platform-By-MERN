@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
 import './App.css';
 import Layout from './components/Layout';
 import Home from './components/Home';
@@ -42,7 +43,7 @@ export const AllRoutes=()=> {
         <Route path="settings" element={<Home />}></Route>
         <Route path="*" element={<NoPage />}></Route>
       </Route>
-      <Route path="/learner/course" element={<Course />}></Route>
+      <Route path="/learner/course/:id" element={<Course />}></Route>
 
 
     {/* <Route path="/instructor/" element={(state.isLoggedIn && state.userType === 'INSTRUCTOR')?<Instructor />:<Navigate replace to="/login" />}> */}

@@ -1,18 +1,37 @@
-import { Col,  Row} from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import CourseCard from "../components/CourseCard";
 function Dashboard() {
-    const items = [
-        { id: 1, title: 'item #1' },
-        { id: 2, title: 'item #2' },
-        { id: 3, title: 'item #3' },
-        { id: 4, title: 'item #4' },
-        { id: 5, title: 'item #5' },
-        { id: 1, title: 'item #1' },
-        { id: 2, title: 'item #2' },
-        { id: 3, title: 'item #3' },
-        { id: 4, title: 'item #4' },
-        { id: 5, title: 'item #5' }
-      ];
+    
+    const [courses, setCourses] = useState([]);
+
+    const getCourses = async () => {
+        try {
+            const res = await fetch("/instructor/courses", {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                credentials: "include"
+            });
+
+            if (!res.status === 200) {
+                throw new Error(res.error)
+            }
+            const data = await res.json();
+            console.log(data);
+            setCourses([...data]);
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    useEffect(() => {
+        getCourses();
+    }, []);
     return (
         <>
             <div className="row dashboard-cards">
@@ -41,7 +60,7 @@ function Dashboard() {
                         <div className="row p-0 m-0">
                             <div className="col-5">
                                 <span className="lm-icon-wrapper">
-                                    <img id="imgServiceZone" src="/students.png" className="lm-icon-size"/>
+                                    <img id="imgServiceZone" src="/students.png" className="lm-icon-size" />
                                 </span>
                             </div>
                             <div className="col-7 text-end pt-2">
@@ -77,7 +96,7 @@ function Dashboard() {
                         <div className="row p-0 m-0">
                             <div className="col-5">
                                 <span className="lm-icon-wrapper">
-                                    <img id="imgRevenue"src="/revenue.png" className="lm-icon-size" />
+                                    <img id="imgRevenue" src="/revenue.png" className="lm-icon-size" />
                                 </span>
                             </div>
                             <div className="col-7 text-end pt-2">
@@ -92,13 +111,13 @@ function Dashboard() {
 
             </div>
             <Row className="mt-2">
-            {items.map((item,index) => 
-                <Col lg="3" key={index}  className="mt-3">
-                <CourseCard key={index}/>
-                </Col>
-            )}
-                
-               
+                {courses.map((item, index) =>
+                    <Col lg="3" key={index} className="mt-3">
+                        <CourseCard key={index} item={item} />
+                    </Col>
+                )}
+
+
             </Row>
         </>
     );

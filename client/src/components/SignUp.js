@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Form, InputGroup, Button, Container, Row, Col } from 'react-bootstrap';
 import { Link,useNavigate} from "react-router-dom";
+import swal from 'sweetalert';
 function SignUp() {
     const navigate=useNavigate();
     const [user, setUser] = useState({
@@ -30,9 +31,10 @@ function SignUp() {
             alert("Invalid Registration.");
             console.log("Invalid Registration.");
         }else{
-            alert("Registration Successfull.");
-            console.log("Registration Successfull.");
-            navigate('/login');
+            swal("Dear "+userType+"!", "Registration Successfull", "success").then((value) => {
+                navigate('/login');
+              });
+           
         }
     }
 
