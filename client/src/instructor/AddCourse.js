@@ -22,8 +22,8 @@ function CustomToggle({ children, eventKey, callback }) {
         <h5
             className="w-100 h-100 me-auto my-0 py-2 px-3"
             onClick={decoratedOnClick}
-            style={{ backgroundColor: isCurrentEventKey ? 'pink' : 'lavender' }}
         >
+            <i className={isCurrentEventKey ? "fa-solid fa-angles-up" : "fa-solid fa-angles-down"}></i>
             {children}
         </h5>
     );
@@ -31,20 +31,20 @@ function CustomToggle({ children, eventKey, callback }) {
 function AddCourse() {
 
     const navigate = useNavigate();
-    
+
 
     const [course, setCourse] = useState({ courseCategory: null, courseSubCategory: null });
     const [topics, setTopics] = useState([]);
-    const topicInitialState={ topicName: "",topicDescription:"", lessions: [] };
+    const topicInitialState = { topicName: "", topicDescription: "", lessions: [] };
     const [topic, setTopic] = useState(topicInitialState);
-    const lessionInitialState={ lessionTitle: "", lessionContent: "", lessionDuration: '', lessionVideoURL: ""};
+    const lessionInitialState = { lessionTitle: "", lessionPreview: false, lessionContent: "", lessionDuration: '', lessionVideoURL: "" };
     const [lession, setLession] = useState(lessionInitialState);
-
-
+    const [editTopic, setEditTopic] = useState(false);
+    const [editLession, setEditLession] = useState(false);
+    const [currentTopic, setCurrentTopic] = useState(-1);
+    const [currentLession, setCurrentLession] = useState(-1);
     const [show, setShow] = useState(false);
     const [showLessionModal, setShowLessionModal] = useState(false);
-    const [editor, setEditor] = useState(null);
-    const [currentTopic, setCurrentTopic] = useState(-1);
     const [selectedImage, setSelectedImage] = useState(null);
 
 
@@ -84,16 +84,29 @@ function AddCourse() {
         e.preventDefault();
         setTopics([...topics, topic]);
         setShow(false);
-        setTopic({...topicInitialState});
+        setTopic({ ...topicInitialState });
     }
     const handleInputs = (e) => {
         let name = e.target.name;
         let value = e.target.value;
         setTopic({ ...topic, [name]: value });
     }
-
+    const updateTopicClick = (e) => {
+        e.preventDefault();
+        let allTopics = [...topics];
+        allTopics[currentTopic] = { ...topic };
+        setTopics([...allTopics]);
+        setShow(false);
+        setTopic({ ...topicInitialState });
+    }
+    const deleteTopicClick = (e, index) => {
+        e.preventDefault();
+        let allTopics = [...topics];
+        allTopics.splice(index, 1);
+        setTopics([...allTopics]);
+    }
     //Lession
-        // const [lessions, setLessions] = useState([]);
+    // const [lessions, setLessions] = useState([]);
     const handleLessionModalInputs = (e) => {
         let name = e.target.name;
         let value;
@@ -101,11 +114,13 @@ function AddCourse() {
             swal("Comming Soon...");
             // value = e.target.files[0];
             // setLession({ ...lession, [name]: value });
-        }else {
+        } else if (name === "lessionPreview") {
+            value = e.target.checked;
+            setLession({ ...lession, [name]: value });
+        } else {
             value = e.target.value;
             setLession({ ...lession, [name]: value });
         }
-        
 
     }
     const handleLessionContentCKEditor = (e) => {
@@ -115,23 +130,32 @@ function AddCourse() {
     }
     const addLessionHandleClick = (e) => {
         e.preventDefault();
-        // setLessions([...lessions, lession]);
-        // const lessionContent = editor?.getData();
-        // setLession({ ...lession, lessionContent });
         const allTopics = [...topics];
         let lessions = [...allTopics[currentTopic].lessions];
         lessions.push(lession);
         allTopics[currentTopic].lessions = lessions;
         setTopics(allTopics);
         setShowLessionModal(false);
-        setLession({...lessionInitialState});
+        setLession({ ...lessionInitialState });
+
     }
 
-  
-
-    
-    
-
+    const updateLessionHandleClick = (e) => {
+        e.preventDefault();
+        let allLessions = [...topics[currentTopic].lessions];
+        allLessions[currentLession] = { ...lession };
+        let allTopics = [...topics];
+        allTopics[currentTopic].lessions = allLessions;
+        setTopics([...allTopics]);
+        setShowLessionModal(false);
+        setLession({ ...lessionInitialState });
+    }
+    const deleteLessionHandleClick = (e, topicIndex, lessionIndex) => {
+        e.preventDefault();
+        let allTopics = [...topics];
+        allTopics[topicIndex].lessions.splice(lessionIndex, 1);
+        setTopics([...allTopics]);
+    }
 
     const postCourseData = async (e) => {
         e.preventDefault();
@@ -198,7 +222,7 @@ function AddCourse() {
                                 </Form.Group>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Course Description</Form.Label>
-                                    <textarea className="form-control" rows="4" placeholder="Enter Course Description"
+                                    <textarea className="form-control" rows="6" placeholder="Enter Course Description"
                                         name="courseDescription"
                                         value={course.courseDescription}
                                         onChange={handleCourseDetailsInputs}
@@ -213,10 +237,10 @@ function AddCourse() {
                                         <div className="form-check form-check-inline">
                                             <input className="form-check-input" type="radio"
                                                 name="courseType"
-                                                value="Free" 
+                                                value="Free"
                                                 checked={course.courseType === "Free"}
-                                                onChange={handleCourseDetailsInputs} 
-                                                />
+                                                onChange={handleCourseDetailsInputs}
+                                            />
                                             <label className="form-check-label" >Free</label>
                                         </div>
                                         <div className="form-check form-check-inline">
@@ -224,20 +248,54 @@ function AddCourse() {
                                                 name="courseType"
                                                 value="Paid"
                                                 checked={course.courseType === "Paid"}
-                                                onChange={handleCourseDetailsInputs} 
-                                                />
+                                                onChange={handleCourseDetailsInputs}
+                                            />
                                             <label className="form-check-label" >Paid</label>
                                         </div>
                                     </Col>
                                     <Col xs="6">
-                                        <InputGroup>
-                                            <Form.Control type="text" placeholder="Enter Course Price"
-                                                name="coursePrice"
-                                                value={course.coursePrice}
+                                        {course.courseType === "Paid" &&
+                                            <InputGroup>
+                                                <Form.Control type="text" placeholder="Enter Course Price"
+                                                    name="coursePrice"
+                                                    value={course.coursePrice}
+                                                    onChange={handleCourseDetailsInputs}
+                                                />
+                                                <InputGroup.Text id="basic-addon1"><i className="fa-solid fa-rupee-sign"></i></InputGroup.Text>
+                                            </InputGroup>
+                                        }
+                                    </Col>
+                                </Form.Group>
+                                <Form.Group as={Row} className="mb-3">
+                                    <Form.Label>Difficulty Level</Form.Label>
+                                    <Col xs="12" className="pt-2">
+                                        <div className="form-check form-check-inline">
+                                            <input className="form-check-input" type="radio"
+                                                name="difficultyLevel"
+                                                value="Beginner"
+                                                checked={course.difficultyLevel === "Beginner"}
                                                 onChange={handleCourseDetailsInputs}
                                             />
-                                            <InputGroup.Text id="basic-addon1"><i className="fa-solid fa-rupee-sign"></i></InputGroup.Text>
-                                        </InputGroup>
+                                            <label className="form-check-label" >Beginner</label>
+                                        </div>
+                                        <div className="form-check form-check-inline">
+                                            <input className="form-check-input" type="radio"
+                                                name="difficultyLevel"
+                                                value="Intermediate"
+                                                checked={course.difficultyLevel === "Intermediate"}
+                                                onChange={handleCourseDetailsInputs}
+                                            />
+                                            <label className="form-check-label" >Intermediate</label>
+                                        </div>
+                                        <div className="form-check form-check-inline">
+                                            <input className="form-check-input" type="radio"
+                                                name="difficultyLevel"
+                                                value="Advance"
+                                                checked={course.difficultyLevel === "Advance"}
+                                                onChange={handleCourseDetailsInputs}
+                                            />
+                                            <label className="form-check-label" >Advance</label>
+                                        </div>
                                     </Col>
                                 </Form.Group>
                                 <Form.Group controlId="formFile" className="mb-3">
@@ -284,13 +342,24 @@ function AddCourse() {
                                                         eventKey={"topic" + index}
 
                                                     >
-                                                        Section {index + 1}: {topic.topicName}
+                                                        <span className="ms-3">Section {index + 1}: {topic.topicName}</span>
                                                     </CustomToggle>
 
-                                                    <Button size="sm" variant="success" ><i className="fas fa-edit"></i></Button>
-                                                    <Button size="sm" variant="danger" ><i className="fa-solid fa-trash-can"></i></Button>
-
-                                                    <span className="mx-3"><i className="fa-solid fa-angle-down"></i></span>
+                                                    <Button size="sm" variant="success"
+                                                        onClick={() => {
+                                                            setTopic({ ...topics[index] });
+                                                            setShow(true);
+                                                            setEditTopic(true);
+                                                            setCurrentTopic(index);
+                                                        }}
+                                                    >
+                                                        <i className="fas fa-edit"></i>
+                                                    </Button>
+                                                    <Button size="sm" variant="danger" className="me-2"
+                                                        onClick={(e) => deleteTopicClick(e, index)}
+                                                    >
+                                                        <i className="fa-solid fa-trash-can">
+                                                        </i></Button>
                                                 </Stack>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey={"topic" + index}>
@@ -310,10 +379,26 @@ function AddCourse() {
                                                                     <span className="px-2"><i className="fa-solid fa-circle-play"></i> {lession.lessionDuration}min</span>
                                                                 </div>
                                                                 <div className="p-2 bd-highlight">
-                                                                    <Button size="sm" variant="success" ><i className="fas fa-edit"></i></Button>
+                                                                    <Button size="sm" variant="success"
+                                                                        onClick={(e) => {
+                                                                            e.preventDefault();
+                                                                            setLession(topics[index].lessions[inx]);
+                                                                            setEditLession(true);
+                                                                            setCurrentLession(inx);
+                                                                            setShowLessionModal(true);
+                                                                        }}
+                                                                    >
+                                                                        <i className="fas fa-edit"></i>
+                                                                    </Button>
                                                                 </div>
                                                                 <div className="p-2 bd-highlight">
-                                                                    <Button size="sm" variant="danger" ><i className="fa-solid fa-trash-can"></i></Button>
+                                                                    <Button size="sm" variant="danger"
+                                                                        onClick={(e) => {
+                                                                            deleteLessionHandleClick(e, index, inx);
+                                                                        }}
+                                                                    >
+                                                                        <i className="fa-solid fa-trash-can"></i>
+                                                                    </Button>
                                                                 </div>
 
 
@@ -328,7 +413,11 @@ function AddCourse() {
                                                     </Button>
                                                     <Modal
                                                         show={showLessionModal}
-                                                        onHide={() => setShowLessionModal(false)}
+                                                        onHide={() => {
+                                                            setShowLessionModal(false);
+                                                            setLession({ ...lessionInitialState });
+                                                            setEditLession(false);
+                                                        }}
                                                         dialogClassName="mw-100 modal-1000w"
 
                                                     >
@@ -351,11 +440,7 @@ function AddCourse() {
                                                                         </Form.Group>
                                                                         <Form.Group className="mb-3">
                                                                             <Form.Label>Content</Form.Label>
-                                                                            {/* <CKEditor
-                                                                            initData={""}
-                                                                            onInstanceReady={handleInstanceReady}
-                                                                            onChange={handleLessionModalInputs}
-                                                                        /> */}
+
                                                                             <Editor
                                                                                 content={lession.lessionContent}
                                                                                 onEditorChange={handleLessionContentCKEditor}
@@ -381,15 +466,30 @@ function AddCourse() {
                                                                             />
 
                                                                         </Form.Group>
-                                                                        <Form.Group className="mb-3" >
-                                                                            <Form.Label>Lession Duration (Minutes)</Form.Label>
-                                                                            <Form.Control
-                                                                                type="number"
-                                                                                placeholder="Enter Lession Duration Here..."
-                                                                                name="lessionDuration"
-                                                                                value={lession.lessionDuration}
-                                                                                onChange={handleLessionModalInputs}
-                                                                            />
+
+                                                                        <Form.Group as={Row} className="mb-3" >
+                                                                            <Col xs="7">
+                                                                                <Form.Label>Lession Duration (Minutes)</Form.Label>
+                                                                                <Form.Control
+                                                                                    type="number"
+                                                                                    placeholder="Enter Lession Duration Here..."
+                                                                                    name="lessionDuration"
+                                                                                    value={lession.lessionDuration}
+                                                                                    onChange={handleLessionModalInputs}
+                                                                                />
+                                                                            </Col>
+                                                                            <Col xs="5">
+                                                                                <Form.Label>Lession Preview</Form.Label>
+                                                                                <Form.Check
+                                                                                    type="switch"
+                                                                                    id="lessionPreview"
+                                                                                    label="Yes"
+                                                                                    name="lessionPreview"
+                                                                                    value={lession.lessionPreview}
+                                                                                    checked={lession.lessionPreview}
+                                                                                    onChange={handleLessionModalInputs}
+                                                                                />
+                                                                            </Col>
                                                                         </Form.Group>
                                                                         <Form.Group className="mb-3">
                                                                             <Form.Label>Resources Upload</Form.Label>
@@ -399,7 +499,7 @@ function AddCourse() {
                                                                                 onChange={handleLessionModalInputs}
                                                                             />
                                                                         </Form.Group>
-                                                                        
+
                                                                     </Col>
                                                                 </Row>
                                                             </Container>
@@ -408,9 +508,15 @@ function AddCourse() {
                                                             <Button variant="secondary" onClick={() => setShowLessionModal(false)}>
                                                                 Close
                                                             </Button>
-                                                            <Button variant="outline-info" onClick={addLessionHandleClick}>
-                                                                <i className="fa fa-plus"></i> Add Lession
-                                                            </Button>
+                                                            {editLession ?
+                                                                <Button variant="info" onClick={updateLessionHandleClick}>
+                                                                    <i className="fa fa-edit"></i> Update
+                                                                </Button>
+                                                                :
+                                                                <Button variant="info" onClick={addLessionHandleClick}>
+                                                                    <i className="fa fa-plus"></i> Add
+                                                                </Button>
+                                                            }
 
                                                         </Modal.Footer>
                                                     </Modal>
@@ -430,7 +536,11 @@ function AddCourse() {
                                     onClick={() => setShow(true)}>
                                     <i className="fa fa-plus"></i> Add Topic
                                 </Button>
-                                <Modal show={show} onHide={() => setShow(false)}>
+                                <Modal show={show} onHide={() => {
+                                    setShow(false);
+                                    setTopic({ ...topicInitialState });
+                                    setEditTopic(false);
+                                }}>
                                     <Modal.Header closeButton>
                                         <Modal.Title>Topic Details</Modal.Title>
                                     </Modal.Header>
@@ -462,9 +572,15 @@ function AddCourse() {
                                         <Button variant="secondary" onClick={() => setShow(false)}>
                                             Close
                                         </Button>
-                                        <Button variant="outline-info" onClick={addTopicClick}>
-                                            <i className="fa fa-plus"></i> Add Topic
-                                        </Button>
+                                        {editTopic ?
+                                            <Button variant="info" onClick={updateTopicClick}>
+                                                <i className="fa fa-edit"></i> Update Topic
+                                            </Button>
+                                            :
+                                            <Button variant="info" onClick={addTopicClick}>
+                                                <i className="fa fa-plus"></i> Add Topic
+                                            </Button>
+                                        }
 
                                     </Modal.Footer>
                                 </Modal>

@@ -2,6 +2,7 @@ import { memo, useState } from "react";
 import { Button, Card, Stack,Badge } from "react-bootstrap";
 import Rating from "react-rating";
 import { Link } from "react-router-dom";
+import { currencyFormat } from "../utilities/currencyFormat";
 function CourseCard({ item }) {
   //console.log("CourseCard");
   const [wish, setWish] = useState("far");
@@ -10,22 +11,22 @@ function CourseCard({ item }) {
       {item &&
         <Card className="course-card w-100 m-1" >
           <Link
-            to={"/learner/course/" + item._id}
+            to={"/course/" + item._id}
             className="text-decoration-none"
           >
             <Card.Img variant="top" src={`/uploads/images/${item.courseImage}`} style={{ height: '10rem' }} />
           </Link>
           <Card.Body>
             <Link
-              to={"/learner/course/" + item._id}
+              to={"/course/" + item._id}
               className="text-decoration-none text-success"
             >
               <span class="badge bg-info status-indicator-style" ><span >New</span></span>
               <Badge bg="secondary" className="float-end">Best Seller</Badge>
-              <Card.Title>{item.courseTitle}</Card.Title>
+              <Card.Title className="course-card-course-title" title={item.courseTitle}>{item.courseTitle}</Card.Title>
               
               <Card.Text>
-                Instructor Name
+                {item.instructor.name}
               </Card.Text>
               <span className="text-warning">3.7 </span>
               
@@ -36,7 +37,7 @@ function CourseCard({ item }) {
                 fullSymbol={"fa-solid fa-star text-warning fs-6"} />
               <span > (200)</span>
               <Card.Text className="mt-2">
-              {item.courseType==='Free'?"Free":"₹"+item.coursePrice}
+              {item.courseType==='Free'?"Free": currencyFormat(item.coursePrice)}
               </Card.Text>
             </Link>
             <Stack direction="horizontal" gap={3} className="mt-3">

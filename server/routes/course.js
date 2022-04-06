@@ -32,7 +32,7 @@ let upload = multer({ storage, fileFilter });
 router.post("/instructor/addcourse", [Authenticate, upload.single('courseImage')], async (req, res) => {
   try {
 
-    const courseObj = { ...req.body, courseImage: req.file.filename, topics: JSON.parse(req.body.topics), instructorId: req.userId };
+    const courseObj = { ...req.body, courseImage: req.file.filename, topics: JSON.parse(req.body.topics), instructor: req.userId };
     console.log(courseObj);
     const course = new Course({ ...courseObj });
     await course.save();
@@ -44,20 +44,29 @@ router.post("/instructor/addcourse", [Authenticate, upload.single('courseImage')
 });
 
 router.get("/courses", async (req, res) => {
-  const courses = await Course.find();
-  res.status(200).json(courses);
+  try {
+    const courses = await Course.find().populate({
+      path: "instructor",
+      select: 'name'
+    });
+    res.status(200).json(courses);
+  } catch (error) {
+    console.log(error);
+  }
 });
-router.get("/course/:id", async (req, res) => {
+router.get("/api/course/:id", async (req, res) => {
   const {
     id
   } = req.params
-  const course = await Course.findById(id);
+  const course = await Course.findById(id).populate({
+    path: "instructor",
+    select: 'name'
+  });
   res.status(200).json(course);
 });
 router.get("/instructor/courses", Authenticate, async (req, res) => {
   try {
-    console.log(req.userId)
-    const course = await Course.find({ instructorId: req.userId });
+    const course = await Course.find({ instructor: req.userId });
     res.status(200).json(course);
 
   } catch (error) {

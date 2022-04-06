@@ -11,6 +11,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    mobileNumber:{
+        type:Number,
+        required:false
+    },
     userType: {
         type: String,
         required: true
@@ -27,7 +31,7 @@ const userSchema = new mongoose.Schema({
             }
         }
     ]
-});
+},{ timestamps: true });
 
 
 userSchema.pre("save", async function (next) {
@@ -49,5 +53,5 @@ userSchema.methods.generateAuthToken = async function () {
     }
 }
 
-const User = mongoose.model("USER", userSchema);
+const User = mongoose.model("User", userSchema);
 module.exports = User;

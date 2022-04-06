@@ -1,12 +1,12 @@
-import React, { memo, useState,useEffect, useContext } from 'react';
+import React, { memo, useState, useEffect, useContext } from 'react';
 import { Dropdown, Stack } from "react-bootstrap";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../App';
 
 function AuthNav() {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const { state, dispatch } = useContext(UserContext);
-    const [userDetails,setUserDetails]=useState({});
+    const [userDetails, setUserDetails] = useState({});
 
     const callInstructorPage = async () => {
         try {
@@ -21,7 +21,7 @@ function AuthNav() {
 
             if (!res.status === 200) {
                 throw new Error(res.error)
-            } 
+            }
             const data = await res.json();
             setUserDetails(data);
             console.log(data);
@@ -34,7 +34,7 @@ function AuthNav() {
 
     }
 
-    const logout=async () => {
+    const logout = async () => {
         try {
             const res = await fetch("/logout", {
                 method: "GET",
@@ -84,30 +84,37 @@ function AuthNav() {
                     height="40rem"
                     className="rounded-pill"
                 />
-                <span className='userProfileName'>{userDetails.name}</span>
+                <span className='userProfileName' title={userDetails.name}>{userDetails.name}</span>
                 {children}
             </Stack>
-           
+
         </a>
 
     ));
 
     return (
         <Dropdown
-            //onMouseEnter={() => setIsHovered(true)}
-            //onMouseLeave={() => setIsHovered(false)}
+            // onMouseEnter={() => setIsHovered(true)}
+            // onMouseLeave={() => setIsHovered(false)}
             onToggle={() => setIsClicked(!isClicked)}
             show={isClicked || isHovered}
+            align={{ sm: 'end' }}
         >
-            <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+            <Dropdown.Toggle as={CustomToggle} id="dropdown-profile-menu">
 
             </Dropdown.Toggle>
-            <Dropdown.Menu>
-                <Dropdown.Item eventKey="1" onClick={()=> alert("Coming Soon...")}>My Profile</Dropdown.Item>
-                <Dropdown.Item eventKey="2" onClick={()=> alert("Coming Soon...")}>Change Password</Dropdown.Item>
+            <Dropdown.Menu style={{"margin-top":"0.5rem","min-width":"200px"}}>
+                {state.userType === "INSTRUCTOR" &&
+                
+                    <Dropdown.Item as={Link} eventKey="/instructor" to="/instructor">Dashboard</Dropdown.Item>
+                }
+                <Dropdown.Item eventKey="1" onClick={() => alert("Coming Soon...")}>My Profile</Dropdown.Item>
+                <Dropdown.Item eventKey="2" onClick={() => alert("Coming Soon...")}>Change Password</Dropdown.Item>
                 <Dropdown.Item eventKey="3" onClick={logout}>Logout</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
+        
+        
     );
 }
 export default memo(AuthNav);

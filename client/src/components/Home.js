@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from "react";
-import {  Row,  Carousel,Col } from "react-bootstrap";
+import {  Row,  Carousel,Col, Container } from "react-bootstrap";
 import MultiCarousel from 'react-elastic-carousel';
 import CourseCard from "./CourseCard";
 
@@ -18,9 +18,9 @@ function Home (){
     { id: 5, title: 'item #5' }
   ];
   const breakPoints = [
-    { width: 1, itemsToShow: 1 },
-    { width: 550, itemsToShow: 2 },
-    { width: 768, itemsToShow: 3 },
+    { width: 1, itemsToShow: 2 },
+    { width: 550, itemsToShow: 3 },
+    { width: 768, itemsToShow: 4 },
     { width: 1200, itemsToShow: 4 },
   ];
   const [courses, setCourses] = useState([]);
@@ -54,7 +54,7 @@ function Home (){
 
 
   return (
-    <>
+    <Container fluid>
       <Row>
         <Carousel variant="dark">
           <Carousel.Item>
@@ -88,10 +88,10 @@ function Home (){
           {courses.map((item,index) => <CourseCard key={index} item={item}/>)}
         </MultiCarousel>
       </Row>
-      <Row className="mt-4">
-          {courses.map((item,index) => <Col lg="3"><CourseCard key={index} item={item}/></Col>)}
+      <Row className="mt-3 px-4">
+          {courses.map((item,index) => <Col lg="3" className="p-2"><CourseCard key={index} item={item}/></Col>)}
       </Row>
-    </>
+    </Container>
   );
 }
 

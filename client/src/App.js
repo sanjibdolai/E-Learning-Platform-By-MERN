@@ -19,7 +19,8 @@ import InstructorProfile from './instructor/Profile';
 import InstructorCourses from './instructor/MyCourses';
 import Lessions from './instructor/Lessions';
 import { initialState, reducer } from './reducer/UseReducer';
-import Course from './learner/Course';
+import LearnerCourse from './learner/Course';
+import Course from './components/Course';
 
 export const UserContext = createContext();
 
@@ -35,6 +36,7 @@ export const AllRoutes=()=> {
         <Route path="login" element={<Login />}></Route>
         <Route path="signup" element={<SignUp />}></Route>
         <Route path="*" element={<NoPage />}></Route>
+        <Route path="course/:id" element={<Course />}></Route>
       </Route>
       <Route path="/learner/" element={<Learner />}>
         <Route index element={<Home />} />
@@ -43,7 +45,7 @@ export const AllRoutes=()=> {
         <Route path="settings" element={<Home />}></Route>
         <Route path="*" element={<NoPage />}></Route>
       </Route>
-      <Route path="/learner/course/:id" element={<Course />}></Route>
+      <Route path="/learner/course/:id" element={<LearnerCourse />}></Route>
 
 
     {/* <Route path="/instructor/" element={(state.isLoggedIn && state.userType === 'INSTRUCTOR')?<Instructor />:<Navigate replace to="/login" />}> */}
