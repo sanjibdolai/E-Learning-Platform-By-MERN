@@ -57,11 +57,16 @@ router.get("/courses", async (req, res) => {
 router.get("/api/course/:id", async (req, res) => {
   const {
     id
-  } = req.params
+  } = req.params;
+
+  
   const course = await Course.findById(id).populate({
     path: "instructor",
     select: 'name'
   });
+  // const count=await Course.find({instructor:course.instructor._id});
+  // instructor ={...course.instructor, courseCount:count.length};
+  // course={...course,instructor};
   res.status(200).json(course);
 });
 router.get("/instructor/courses", Authenticate, async (req, res) => {
