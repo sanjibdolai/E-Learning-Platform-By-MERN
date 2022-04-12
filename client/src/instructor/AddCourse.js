@@ -411,115 +411,7 @@ function AddCourse() {
                                                         onClick={() => { setCurrentTopic(index); setShowLessionModal(true); }}>
                                                         <i className="fa fa-plus"></i> Add Lession
                                                     </Button>
-                                                    <Modal
-                                                        show={showLessionModal}
-                                                        onHide={() => {
-                                                            setShowLessionModal(false);
-                                                            setLession({ ...lessionInitialState });
-                                                            setEditLession(false);
-                                                        }}
-                                                        dialogClassName="mw-100 modal-1000w"
 
-                                                    >
-                                                        <Modal.Header closeButton>
-                                                            <Modal.Title>Lession Details</Modal.Title>
-                                                        </Modal.Header>
-                                                        <Modal.Body className="modal-body-86vh">
-                                                            <Container>
-                                                                <Row>
-                                                                    <Col>
-                                                                        <Form.Group className="mb-3" >
-                                                                            <Form.Label>Lession Title</Form.Label>
-                                                                            <Form.Control
-                                                                                type="text"
-                                                                                placeholder="Enter Lession Title Here..."
-                                                                                name="lessionTitle"
-                                                                                value={lession.lessionTitle}
-                                                                                onChange={handleLessionModalInputs}
-                                                                            />
-                                                                        </Form.Group>
-                                                                        <Form.Group className="mb-3">
-                                                                            <Form.Label>Content</Form.Label>
-
-                                                                            <Editor
-                                                                                content={lession.lessionContent}
-                                                                                onEditorChange={handleLessionContentCKEditor}
-                                                                            />
-
-                                                                        </Form.Group>
-                                                                        <Form.Group className="mb-3" >
-                                                                            <Form.Label>Video URL</Form.Label>
-                                                                            <Form.Control
-                                                                                type="text"
-                                                                                placeholder="Paste Video URL..."
-                                                                                name="lessionVideoURL"
-                                                                                value={lession.lessionVideoURL}
-                                                                                onChange={handleLessionModalInputs}
-                                                                            />
-                                                                        </Form.Group>
-                                                                        <Form.Group className="mb-3">
-                                                                            <Form.Label>Video Upload</Form.Label>
-                                                                            <Form.Control
-                                                                                type="file"
-                                                                                name="lessionVideoFile"
-                                                                                onChange={handleLessionModalInputs}
-                                                                            />
-
-                                                                        </Form.Group>
-
-                                                                        <Form.Group as={Row} className="mb-3" >
-                                                                            <Col xs="7">
-                                                                                <Form.Label>Lession Duration (Minutes)</Form.Label>
-                                                                                <Form.Control
-                                                                                    type="number"
-                                                                                    placeholder="Enter Lession Duration Here..."
-                                                                                    name="lessionDuration"
-                                                                                    value={lession.lessionDuration}
-                                                                                    onChange={handleLessionModalInputs}
-                                                                                />
-                                                                            </Col>
-                                                                            <Col xs="5">
-                                                                                <Form.Label>Lession Preview</Form.Label>
-                                                                                <Form.Check
-                                                                                    type="switch"
-                                                                                    id="lessionPreview"
-                                                                                    label="Yes"
-                                                                                    name="lessionPreview"
-                                                                                    value={lession.lessionPreview}
-                                                                                    checked={lession.lessionPreview}
-                                                                                    onChange={handleLessionModalInputs}
-                                                                                />
-                                                                            </Col>
-                                                                        </Form.Group>
-                                                                        <Form.Group className="mb-3">
-                                                                            <Form.Label>Resources Upload</Form.Label>
-                                                                            <Form.Control
-                                                                                type="file"
-                                                                                name="lessionResourcesFile"
-                                                                                onChange={handleLessionModalInputs}
-                                                                            />
-                                                                        </Form.Group>
-
-                                                                    </Col>
-                                                                </Row>
-                                                            </Container>
-                                                        </Modal.Body>
-                                                        <Modal.Footer>
-                                                            <Button variant="secondary" onClick={() => setShowLessionModal(false)}>
-                                                                Close
-                                                            </Button>
-                                                            {editLession ?
-                                                                <Button variant="info" onClick={updateLessionHandleClick}>
-                                                                    <i className="fa fa-edit"></i> Update
-                                                                </Button>
-                                                                :
-                                                                <Button variant="info" onClick={addLessionHandleClick}>
-                                                                    <i className="fa fa-plus"></i> Add
-                                                                </Button>
-                                                            }
-
-                                                        </Modal.Footer>
-                                                    </Modal>
                                                 </Card.Body>
                                                 {/* End Lession Details */}
 
@@ -536,54 +428,7 @@ function AddCourse() {
                                     onClick={() => setShow(true)}>
                                     <i className="fa fa-plus"></i> Add Topic
                                 </Button>
-                                <Modal show={show} onHide={() => {
-                                    setShow(false);
-                                    setTopic({ ...topicInitialState });
-                                    setEditTopic(false);
-                                }}>
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>Topic Details</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>
-                                        <Container>
-                                            <Row>
-                                                <Col>
-                                                    <Form.Group className="mb-3" >
-                                                        <Form.Label>Topic Name</Form.Label>
-                                                        <Form.Control type="text" placeholder="Enter Topic Name"
-                                                            name="topicName"
-                                                            value={topic.topicName}
-                                                            onChange={handleInputs}
-                                                        />
-                                                    </Form.Group>
-                                                    <Form.Group className="mb-3" >
-                                                        <Form.Label>Topic Description</Form.Label>
-                                                        <textarea className="form-control" rows="4" placeholder="Enter Topic Description"
-                                                            name="topicDescription"
-                                                            value={topic.topicDescription}
-                                                            onChange={handleInputs}
-                                                        />
-                                                    </Form.Group>
-                                                </Col>
-                                            </Row>
-                                        </Container>
-                                    </Modal.Body>
-                                    <Modal.Footer>
-                                        <Button variant="secondary" onClick={() => setShow(false)}>
-                                            Close
-                                        </Button>
-                                        {editTopic ?
-                                            <Button variant="info" onClick={updateTopicClick}>
-                                                <i className="fa fa-edit"></i> Update Topic
-                                            </Button>
-                                            :
-                                            <Button variant="info" onClick={addTopicClick}>
-                                                <i className="fa fa-plus"></i> Add Topic
-                                            </Button>
-                                        }
 
-                                    </Modal.Footer>
-                                </Modal>
                             </Col>
 
                         </Row>
@@ -607,6 +452,163 @@ function AddCourse() {
                 </Card>
                 {/* End Buttons */}
             </form>
+            <Modal show={show} onHide={() => {
+                setShow(false);
+                setTopic({ ...topicInitialState });
+                setEditTopic(false);
+            }}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Topic Details</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Container>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" >
+                                    <Form.Label>Topic Name</Form.Label>
+                                    <Form.Control type="text" placeholder="Enter Topic Name"
+                                        name="topicName"
+                                        value={topic.topicName}
+                                        onChange={handleInputs}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" >
+                                    <Form.Label>Topic Description</Form.Label>
+                                    <textarea className="form-control" rows="4" placeholder="Enter Topic Description"
+                                        name="topicDescription"
+                                        value={topic.topicDescription}
+                                        onChange={handleInputs}
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                    </Container>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShow(false)}>
+                        Close
+                    </Button>
+                    {editTopic ?
+                        <Button variant="info" onClick={updateTopicClick}>
+                            <i className="fa fa-edit"></i> Update Topic
+                        </Button>
+                        :
+                        <Button variant="info" onClick={addTopicClick}>
+                            <i className="fa fa-plus"></i> Add Topic
+                        </Button>
+                    }
+
+                </Modal.Footer>
+            </Modal>
+            <Modal
+                show={showLessionModal}
+                onHide={() => {
+                    setShowLessionModal(false);
+                    setLession({ ...lessionInitialState });
+                    setEditLession(false);
+                }}
+                dialogClassName="mw-100 modal-1000w"
+
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Lession Details</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="modal-body-86vh">
+                    <Container>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" >
+                                    <Form.Label>Lession Title</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Enter Lession Title Here..."
+                                        name="lessionTitle"
+                                        value={lession.lessionTitle}
+                                        onChange={handleLessionModalInputs}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Content</Form.Label>
+
+                                    <Editor
+                                        content={lession.lessionContent}
+                                        onEditorChange={handleLessionContentCKEditor}
+                                    />
+
+                                </Form.Group>
+                                <Form.Group className="mb-3" >
+                                    <Form.Label>Video URL</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Paste Video URL..."
+                                        name="lessionVideoURL"
+                                        value={lession.lessionVideoURL}
+                                        onChange={handleLessionModalInputs}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Video Upload</Form.Label>
+                                    <Form.Control
+                                        type="file"
+                                        name="lessionVideoFile"
+                                        onChange={handleLessionModalInputs}
+                                    />
+
+                                </Form.Group>
+
+                                <Form.Group as={Row} className="mb-3" >
+                                    <Col xs="7">
+                                        <Form.Label>Lession Duration (Minutes)</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            placeholder="Enter Lession Duration Here..."
+                                            name="lessionDuration"
+                                            value={lession.lessionDuration}
+                                            onChange={handleLessionModalInputs}
+                                        />
+                                    </Col>
+                                    <Col xs="5">
+                                        <Form.Label>Lession Preview</Form.Label>
+                                        <Form.Check
+                                            type="switch"
+                                            id="lessionPreview"
+                                            label="Yes"
+                                            name="lessionPreview"
+                                            value={lession.lessionPreview}
+                                            checked={lession.lessionPreview}
+                                            onChange={handleLessionModalInputs}
+                                        />
+                                    </Col>
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Resources Upload</Form.Label>
+                                    <Form.Control
+                                        type="file"
+                                        name="lessionResourcesFile"
+                                        onChange={handleLessionModalInputs}
+                                    />
+                                </Form.Group>
+
+                            </Col>
+                        </Row>
+                    </Container>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowLessionModal(false)}>
+                        Close
+                    </Button>
+                    {editLession ?
+                        <Button variant="info" onClick={updateLessionHandleClick}>
+                            <i className="fa fa-edit"></i> Update
+                        </Button>
+                        :
+                        <Button variant="info" onClick={addLessionHandleClick}>
+                            <i className="fa fa-plus"></i> Add
+                        </Button>
+                    }
+
+                </Modal.Footer>
+            </Modal>
         </Container >
 
     );

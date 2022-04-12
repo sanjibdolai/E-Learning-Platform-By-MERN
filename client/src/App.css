@@ -61,6 +61,9 @@
     margin-top: 5px;
     margin-bottom: 5px;
 }
+.modal-900w{
+    width: 900px !important;
+}
 
 .modal-body-86vh {
     max-height: 79vh;

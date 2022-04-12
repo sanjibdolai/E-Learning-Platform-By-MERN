@@ -2,7 +2,7 @@ import { memo, useState } from "react";
 import { Button, Card, Stack,Badge } from "react-bootstrap";
 import Rating from "react-rating";
 import { Link } from "react-router-dom";
-import { currencyFormat } from "../utilities/currencyFormat";
+import { currencyFormat } from "../utilities/util";
 function CourseCard({ item }) {
   //console.log("CourseCard");
   const [wish, setWish] = useState("far");

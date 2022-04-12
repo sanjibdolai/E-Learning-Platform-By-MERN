@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 require("../db/conn");
+require("../model/User");
 const Course = require("../model/Course");
 const Authenticate = require("../middleware/Authenticate");
 
@@ -59,15 +60,17 @@ router.get("/api/course/:id", async (req, res) => {
     id
   } = req.params;
 
+  const course = await Course.findById(id).populate(
+    {
+      path: "instructor",
+      select: 'name'
+    });
+  const instructorCourses=await Course.find({instructor:course.instructor._id});
   
-  const course = await Course.findById(id).populate({
-    path: "instructor",
-    select: 'name'
-  });
   // const count=await Course.find({instructor:course.instructor._id});
   // instructor ={...course.instructor, courseCount:count.length};
   // course={...course,instructor};
-  res.status(200).json(course);
+  res.status(200).json({course,instructorCourses});
 });
 router.get("/instructor/courses", Authenticate, async (req, res) => {
   try {

@@ -1,8 +1,9 @@
 import { memo, useState, useEffect, useContext } from "react";
-import { Col, Container, Row, Breadcrumb, Badge, Stack, Accordion, Button, ListGroup, Card, Image, useAccordionButton, AccordionContext, ProgressBar, Form, InputGroup, FormControl } from "react-bootstrap";
+import { Col, Container, Row, Breadcrumb, Badge, Stack, Accordion, Button, ListGroup, Card, Image, useAccordionButton, AccordionContext, ProgressBar, Form, InputGroup, FormControl, Modal, Ratio } from "react-bootstrap";
+import ReactPlayer from "react-player";
 import Rating from "react-rating";
 import { Link, useParams } from "react-router-dom";
-import { currencyFormat } from "../utilities/currencyFormat";
+import { currencyFormat, minutesToHoursMinutes } from "../utilities/util";
 function CustomToggle({ children, eventKey, callback }) {
     const { activeEventKey } = useContext(AccordionContext);
     const decoratedOnClick = useAccordionButton(
@@ -27,9 +28,34 @@ function CustomToggle({ children, eventKey, callback }) {
 }
 
 function Course() {
-    const [course, setCourse] = useState({});
+    const [course, setCourse] = useState();
+    const [instructorCourses, setInstructorCourses] = useState({});
+    const [previewLession, setPreviewLession] = useState({ showPreviewModal: false, lession: null });
     const params = useParams();
     const [wish, setWish] = useState("far");
+    const getTotalLessions = () => {
+        let totalLesstions = 0;
+        course.topics.forEach(element => {
+            totalLesstions += element.lessions.length;
+        });
+        return totalLesstions;
+    }
+    const getTotalCourseDuration = () => {
+        let totalDuration = 0;
+        course.topics.forEach(topic => {
+            topic.lessions.forEach(lession => {
+                totalDuration += lession.lessionDuration;
+            });
+        });
+        return minutesToHoursMinutes(totalDuration);
+    }
+    const getTotalTopicDuration = (topicId) => {
+        let totalDuration = 0;
+        const topic1=course.topics.find(item=> item._id===topicId).lessions.forEach(lession => {
+            totalDuration += lession.lessionDuration;
+        });
+        return minutesToHoursMinutes(totalDuration);
+    }
     const getCourseDetails = async () => {
 
         try {
@@ -46,7 +72,8 @@ function Course() {
             }
             const data = await res.json();
             console.log(data);
-            setCourse({ ...data });
+            setCourse(data.course);
+            setInstructorCourses(data.instructorCourses);
 
         } catch (error) {
             console.log(error);
@@ -57,8 +84,12 @@ function Course() {
     useEffect(() => {
         getCourseDetails();
     }, []);
+
+
+
+
     return (
-        <>
+        <>{course &&
             <Container>
                 <Row>
                     <Col lg="8">
@@ -100,11 +131,11 @@ function Course() {
                             <Col >
                                 <h3 className="ms-1">Course Content</h3>
                                 <Stack direction="horizontal" gap={3} className="my-2 ms-1">
-                                    <span>31 sections</span>
+                                    <span>{course.topics.length} sections</span>
                                     <span>•</span>
-                                    <span>572 lesstions</span>
+                                    <span>{getTotalLessions()} lessions</span>
                                     <span>•</span>
-                                    <span>52h 37m total length</span>
+                                    <span>{getTotalCourseDuration()} total length</span>
                                 </Stack>
                                 <Accordion>
                                     {course.topics && course.topics.map((topic, index) =>
@@ -115,13 +146,15 @@ function Course() {
 
                                                 >
                                                     <h5 className="me-auto">Section {index + 1}: {topic.topicName}</h5>
-                                                    <span>10 Lessions</span>
+                                                    <span>{topic.lessions.length} Lessions</span>
                                                     <span>•</span>
-                                                    <span>55 min</span>
+                                                    <span>{getTotalTopicDuration(topic._id)}</span>
                                                 </CustomToggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey={"topic" + index}>
-                                                <Card.Body>
+                                                <Card.Body>{
+
+                                                }
                                                     <ListGroup
                                                         variant="flush"
                                                         as="ul">
@@ -130,13 +163,23 @@ function Course() {
                                                                 key={inx}
                                                                 as="li"
                                                                 className="d-flex justify-content-between align-items-start"
-                                                                action
-
                                                             >
                                                                 <div className="ms-2 me-auto">
                                                                     <div className="fw-bold">{inx + 1}. {lession.lessionTitle}</div>
                                                                     <span><i className="fa-solid fa-circle-play"></i> {lession.lessionDuration}min</span>
                                                                 </div>
+                                                                {lession.lessionPreview &&
+                                                                    <a
+                                                                        className="text-decoration-none text-primary"
+                                                                        onClick={(e) => {
+                                                                            e.preventDefault();
+                                                                            setPreviewLession({
+                                                                                showPreviewModal: true,
+                                                                                lession: lession
+                                                                            });
+                                                                        }}>
+                                                                        <i className="fa-solid fa-circle-play"></i> Preview</a>
+                                                                }
 
                                                             </ListGroup.Item>
                                                         )}
@@ -181,7 +224,7 @@ function Course() {
                                         <span><i className="fa-solid fa-star"></i> 4.7 Instructor Rating</span>
                                         <span><i className="fas fa-trophy"></i> 358,875 Reviews</span>
                                         <span><i className="fas fa-user-friends"></i> 1,017,536 Students</span>
-                                        <span><i className="fas fa-play-circle"></i> 30 Courses</span>
+                                        <span><i className="fas fa-play-circle"></i> {instructorCourses.length} Courses</span>
                                     </Stack>
                                 </Stack>
                                 <p>
@@ -365,10 +408,10 @@ function Course() {
                                 <Card.Text>
                                     <span className="fs-3 me-2">{currencyFormat(course.coursePrice)} </span>
                                     <span className="text-decoration-line-through me-2">{currencyFormat(3484)} </span>
-                                    <span>52% off</span><br/>
+                                    <span>52% off</span><br />
                                     <span><i class="fa-solid fa-clock"></i> 2 days left at this price!</span>
                                 </Card.Text>
-                               
+
                                 <Stack direction="horizontal" gap={3} className="mt-3">
                                     <Button variant="success" className="w-100 me-auto py-2">
                                         <i className="fas fa-cart-plus"></i> Add To Cart</Button>
@@ -400,6 +443,36 @@ function Course() {
                     </Col>
                 </Row>
             </Container>
+        }
+            {previewLession.showPreviewModal &&
+                <Modal show={previewLession.showPreviewModal} onHide={() => {
+                    setPreviewLession({ showPreviewModal: false, lession: null });
+                }}
+                    backdrop="static"
+                    dialogClassName="mw-100 modal-900w"
+                    centered="true"
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>{previewLession.lession.lessionTitle}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Container>
+                            <Row>
+                                <Col>
+                                    <Ratio aspectRatio="16x9" className="">
+                                        <ReactPlayer
+                                            url={previewLession.lession.lessionVideoURL}
+                                            width="100%" height="100%"
+                                            controls={true}
+                                        />
+                                    </Ratio>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </Modal.Body>
+                </Modal>
+            }
+
         </>
     );
 }

@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
             }
         }
     ]
-},{ timestamps: true });
+},{ timestamps: true ,selectPopulatedPaths: false,toJSON: { virtuals: true }, toObject: {virtuals: true} });
 
 
 userSchema.pre("save", async function (next) {
@@ -52,6 +52,18 @@ userSchema.methods.generateAuthToken = async function () {
         console.log(error);
     }
 }
+
+
+userSchema.virtual('instructorCourses', {
+    ref: 'Course',
+    localField: '_id',
+    foreignField: 'instructor',
+    justOne: false,
+    count: true
+  });
+  
+
+
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;

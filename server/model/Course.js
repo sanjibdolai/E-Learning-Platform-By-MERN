@@ -79,7 +79,7 @@ const courseSchema = new Schema({
             ]
         }
     ]
-},{ timestamps: true });
+},{ timestamps: true,selectPopulatedPaths: false,toJSON: { virtuals: true }, toObject: {virtuals: true} });
 
 
 

@@ -89,7 +89,7 @@ function Home (){
         </MultiCarousel>
       </Row>
       <Row className="mt-3 px-4">
-          {courses.map((item,index) => <Col lg="3" className="p-2"><CourseCard key={index} item={item}/></Col>)}
+          {courses.map((item,index) => <Col lg="3" md="6" className="p-2"><CourseCard key={index} item={item}/></Col>)}
       </Row>
     </Container>
   );
