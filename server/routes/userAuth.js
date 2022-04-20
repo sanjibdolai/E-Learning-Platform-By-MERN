@@ -5,7 +5,7 @@ const router = express.Router();
 require("../db/conn");
 const User = require("../model/User");
 const bcrypt = require("bcrypt");
-const Authenticate=require("../middleware/Authenticate");
+const {Authenticate, UserTypeAuthenticate}=require("../middleware/Authenticate");
 
 
 router.post("/signup", async (req, res) => {
@@ -62,7 +62,7 @@ router.get("/logout", (req, res) => {
   res.status(200).send("User Logout");
 });
 
-router.get("/instructor", Authenticate ,(req, res) => {
+router.get("/instructor", UserTypeAuthenticate('Instructor') ,(req, res) => {
   res.send(req.rootUser);
 });
 router.get("/userdata", Authenticate ,(req, res) => {

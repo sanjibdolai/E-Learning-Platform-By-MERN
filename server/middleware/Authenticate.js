@@ -15,6 +15,7 @@ const Authenticate=async (req,res,next)=> {
         req.token=token;
         req.rootUser=rootUser;
         req.userId=rootUser._id;
+        req.userType=rootUser.userType;
 
         next();
         
@@ -22,6 +23,22 @@ const Authenticate=async (req,res,next)=> {
         res.status(401).send("Unauthorized: No token provided.");
         console.log(error);
     }
-}
+};
 
-module.exports=Authenticate;
+const UserTypeAuthenticate = function(userType) {
+    return function(req, res, next){
+        Authenticate(req, res, function () {
+        if(req.userType === userType){
+          next();
+        } else {
+          return res.status(403).json({
+            success: false,
+            message: "You don't have the right permission to access this resource :)"
+          });
+        }
+      });
+    }
+  };
+  
+
+module.exports={Authenticate,UserTypeAuthenticate};

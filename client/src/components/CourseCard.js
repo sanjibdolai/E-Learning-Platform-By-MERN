@@ -1,11 +1,35 @@
 import { memo, useState } from "react";
-import { Button, Card, Stack,Badge } from "react-bootstrap";
+import { Button, Card, Stack, Badge } from "react-bootstrap";
 import Rating from "react-rating";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { currencyFormat } from "../utilities/util";
 function CourseCard({ item }) {
   //console.log("CourseCard");
   const [wish, setWish] = useState("far");
+  const navigate = useNavigate();
+  const addToCart = async (e, courseId) => {
+    e.preventDefault();
+    const res = await fetch("/api/addtocart", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        courseId
+      })
+    });
+
+    const data = await res.json();
+    if (res.status === 422 || !data) {
+      console.log("Invalid.");
+    } else {
+      console.log("Successfully Added.");
+      navigate("/cart");
+    }
+
+  }
   return (
     <>
       {item &&
@@ -21,15 +45,15 @@ function CourseCard({ item }) {
               to={"/course/" + item._id}
               className="text-decoration-none text-success"
             >
-              <span class="badge bg-info status-indicator-style" ><span >New</span></span>
+              <span className="badge bg-info status-indicator-style" ><span >New</span></span>
               <Badge bg="secondary" className="float-end">Best Seller</Badge>
               <Card.Title className="course-card-course-title" title={item.courseTitle}>{item.courseTitle}</Card.Title>
-              
+
               <Card.Text>
                 {item.instructor.name}
               </Card.Text>
               <span className="text-warning">3.7 </span>
-              
+
               <Rating
                 readonly={true}
                 initialRating={3.7}
@@ -37,11 +61,13 @@ function CourseCard({ item }) {
                 fullSymbol={"fa-solid fa-star text-warning fs-6"} />
               <span > (200)</span>
               <Card.Text className="mt-2">
-              {item.courseType==='Free'?"Free": currencyFormat(item.coursePrice)}
+                {item.courseType === 'Free' ? "Free" : currencyFormat(item.coursePrice)}
               </Card.Text>
             </Link>
             <Stack direction="horizontal" gap={3} className="mt-3">
-              <Button variant="success" className="w-100 me-auto"><i className="fas fa-cart-plus"></i> Add To Cart</Button>
+              <Button variant="success" className="w-100 me-auto"
+              onClick={e=>addToCart(e,item._id)}
+              ><i className="fas fa-cart-plus"></i> Add To Cart</Button>
               <span
                 className="text-danger float-end pt-1 spanWisListBtn"
                 title="Add To Wish List"

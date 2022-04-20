@@ -56,7 +56,7 @@ function Navigation() {
                         <ListGroup.Item>
                             <Nav.Link
                                 as={Link}
-                                to="/carts"
+                                to="/cart"
                                 className='position-relative text-info'
                             >
                                 <i className="fas fa-shopping-cart fs-3"></i>
@@ -124,7 +124,7 @@ function Navigation() {
                         </Dropdown>
                         <NavItem className="ms-lg-5" >
                             <SearchBar
-                                style={{ "min-width": "450px" }}
+                                style={{ "minWidth": "450px" }}
                                 onClick={() => swal("Comming Soon...")}
                             />
                         </NavItem>

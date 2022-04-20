@@ -1,10 +1,12 @@
 import { memo, useEffect, useState } from "react";
-import {  Row,  Carousel,Col, Container } from "react-bootstrap";
+import { Row, Carousel, Col, Container } from "react-bootstrap";
 import MultiCarousel from 'react-elastic-carousel';
 import CourseCard from "./CourseCard";
+import BounceLoader from 'react-spinners/BounceLoader'
 
-function Home (){
-  console.log("Home");
+
+function Home() {
+  let [loading, setLoading] = useState(true);
   const items = [
     { id: 1, title: 'item #1' },
     { id: 2, title: 'item #2' },
@@ -25,37 +27,39 @@ function Home (){
   ];
   const [courses, setCourses] = useState([]);
 
-    const getCourses = async () => {
-        try {
-            const res = await fetch("/courses", {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json"
-                },
-            });
+  const getCourses = async () => {
+    try {
+      const res = await fetch("/courses", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+      });
 
-            if (!res.status === 200) {
-                throw new Error(res.error)
-            }
-            const data = await res.json();
-            console.log(data);
-            setCourses([ ...data ]);
+      if (!res.status === 200) {
+        throw new Error(res.error)
+      }
+      const data = await res.json();
+      console.log(data);
+      setCourses([...data]);
 
-        } catch (error) {
-            console.log(error);
-        }
-
+    } catch (error) {
+      console.log(error);
     }
 
-    useEffect(() => {
-        getCourses();
-    }, []);
+  }
+
+  useEffect(() => {
+    getCourses();
+    setLoading(false);
+    return;
+  }, []);
 
 
   return (
     <Container fluid>
-      <Row>
+      <Row >
         <Carousel variant="dark">
           <Carousel.Item>
             <img
@@ -89,9 +93,11 @@ function Home (){
         </MultiCarousel>
       </Row>
       <Row className="mt-3 px-4">
-          {courses.map((item,index) => <Col lg="3" md="6" className="p-2"><CourseCard key={index} item={item}/></Col>)}
+          {courses.map((item,index) => <Col lg="3" md="6" className="p-2" key={index}><CourseCard item={item}/></Col>)}
       </Row>
-    </Container>
+      
+      
+    </Container >
   );
 }
 

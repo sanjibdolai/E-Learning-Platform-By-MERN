@@ -8,9 +8,7 @@ const Layout = () => {
   return (
     <>
       <Navigation />
-      <Container fluid className="py-2 bodyContainer">
-        <Outlet />
-      </Container>
+      <Outlet />
       <Footer />
     </>
   )
