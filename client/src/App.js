@@ -22,6 +22,7 @@ import { initialState, reducer } from './reducer/UseReducer';
 import LearnerCourse from './learner/Course';
 import Course from './components/Course';
 import Cart from './components/Cart';
+import Checkout from './components/Checkout';
 
 export const UserContext = createContext();
 
@@ -37,6 +38,7 @@ export const AllRoutes=()=> {
         <Route path="login" element={<Login />}></Route>
         <Route path="signup" element={<SignUp />}></Route>
         <Route path="cart" element={<Cart />}></Route>
+        <Route path="checkout" element={<Checkout />}></Route> 
         <Route path="*" element={<NoPage />}></Route>
         <Route path="course/:id" element={<Course />}></Route>
       </Route>

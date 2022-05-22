@@ -4,7 +4,7 @@ const router = express.Router();
 require("../db/conn");
 require("../model/User");
 const Course = require("../model/Course");
-const {Authenticate, UserTypeAuthenticate} = require("../middleware/Authenticate");
+const { Authenticate, UserTypeAuthenticate } = require("../middleware/Authenticate");
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 let path = require('path');
@@ -64,12 +64,12 @@ router.get("/api/course/:id", async (req, res) => {
       path: "instructor",
       select: 'name'
     });
-  const instructorCourses=await Course.find({instructor:course.instructor._id});
-  
+  const instructorCourses = await Course.find({ instructor: course.instructor._id });
+
   // const count=await Course.find({instructor:course.instructor._id});
   // instructor ={...course.instructor, courseCount:count.length};
   // course={...course,instructor};
-  res.status(200).json({course,instructorCourses});
+  res.status(200).json({ course, instructorCourses });
 });
 router.get("/instructor/courses", UserTypeAuthenticate('Instructor'), async (req, res) => {
   try {
@@ -84,7 +84,7 @@ router.get("/instructor/courses", UserTypeAuthenticate('Instructor'), async (req
 router.post("/api/addtocart", UserTypeAuthenticate('Learner'), async (req, res) => {
   try {
 
-    const cartObj = { course:req.body.courseId, userId: req.userId };
+    const cartObj = { course: req.body.courseId, userId: req.userId };
     const cart = new Cart({ ...cartObj });
     await cart.save();
     res.status(201).json({ message: "Successfully Added." });
@@ -92,11 +92,15 @@ router.post("/api/addtocart", UserTypeAuthenticate('Learner'), async (req, res) 
     console.log(error);
   }
 });
-router.get("/api/carts", UserTypeAuthenticate('Learner') ,async (req, res) => {
+router.get("/api/carts", UserTypeAuthenticate('Learner'), async (req, res) => {
   try {
     const carts = await Cart.find({ userId: req.userId }).populate(
       {
-        path: "course"
+        path: "course",
+        "populate": {
+          path: "instructor",
+          select: 'name'
+        }
       });
     res.status(200).json(carts);
 
@@ -107,11 +111,78 @@ router.get("/api/carts", UserTypeAuthenticate('Learner') ,async (req, res) => {
 
 router.post("/api/removefromcart", UserTypeAuthenticate('Learner'), async (req, res) => {
   try {
-    await Cart.deleteOne({_id:req.body.cartId});
+    await Cart.deleteOne({ _id: req.body.cartId });
     res.status(201).json({ message: "Successfully Removed." });
   } catch (error) {
     console.log(error);
   }
 });
+
+router.post("/api/order", UserTypeAuthenticate('Learner'), async (req, res) => {
+  try {
+    await Cart.deleteOne({ _id: req.body.cartId });
+    res.status(201).json({ message: "Successfully Removed." });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
+
+
+// const request = require('request');
+// router.post('/api/checkout', Authenticate, async (req, res) => {
+//   req.body.txnid = Date.now();
+//   req.body.email = req.user.email;
+//   req.body.name = req.user.name;
+//   const pay = req.body;
+//   const hashString = 'O0Oys7kn'
+//     + '|' + pay.txnid
+//     + '|' + pay.amount
+//     + '|' + pay.courses_info
+//     + '|' + pay.name
+//     + '|' + pay.email
+//     + '|' + '||||||||||'
+//     + 'Ywyzl1r38GE'
+//   const sha = new jsSHA('SHA-512', "TEXT");
+//   sha.update(hashString);
+//   const hash = sha.getHash("HEX");
+//   pay.key = 'O0Oys7kn'
+//   pay.surl = '/payment/success';
+//   pay.furl = '/payment/fail';
+//   pay.hash = hash;
+//   request.post({
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json'
+//     },
+//     url: 'https://sandboxsecure.payu.in/_payment', //Testing url
+//     form: pay
+//   }, function (error, httpRes, body) {
+//     if (error)
+//       res.send(
+//         {
+//           status: false,
+//           message: error.toString()
+//         }
+//       );
+//     if (httpRes.statusCode === 200) {
+//       res.send(body);
+//     } else if (httpRes.statusCode >= 300 &&
+//       httpRes.statusCode <= 400) {
+//       res.redirect(httpRes.headers.location.toString());
+//     }
+//   })
+// });
+
+// route.post('/payment/success', (req, res) => {
+//   res.send(req.body);
+// });
+
+// route.post('/payment/fail', (req, res) => {
+//    res.send(req.body);
+// });
+
+
 
 module.exports = router;

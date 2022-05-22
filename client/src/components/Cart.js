@@ -169,9 +169,9 @@ function Cart() {
                                                         <div className="p-1 flex-grow-1">
                                                             <Row >
                                                                 <Col xs="auto" className="me-auto">
-                                                                    <Card.Title className="cart-course-title mb-0" title="Python From Scratch & Selenium WebDriver QA Automation 2022">Python From Scratch & Selenium WebDriver QA Automation 2022</Card.Title>
+                                                                    <Card.Title className="cart-course-title mb-0" title={item.course.courseTitle}>{item.course.courseTitle}</Card.Title>
 
-                                                                    <span>By Sanjib Dolai</span>
+                                                                    <span>By {item.course.instructor.name}</span>
                                                                 </Col>
                                                                 <Col xs="auto" >
                                                                     <h5>{item.course.courseType === 'Free' ? "Free" : currencyFormat(item.course.coursePrice)}</h5>
@@ -273,7 +273,7 @@ function Cart() {
                                                                 <Col xs="auto" className="me-auto">
                                                                     <Card.Title className="cart-course-title mb-0" title="Python From Scratch & Selenium WebDriver QA Automation 2022">Python From Scratch & Selenium WebDriver QA Automation 2022</Card.Title>
 
-                                                                    <span>By Sanjib Dolai</span>
+                                                                    <span>By {item.course.instructor.name}</span>
                                                                 </Col>
                                                                 <Col xs="auto" >
                                                                     <h5 >{item.course.courseType === 'Free' ? "Free" : currencyFormat(item.course.coursePrice)}</h5>
@@ -286,7 +286,7 @@ function Cart() {
                                                                     direction="horizontal"
                                                                     gap={3}
                                                                 >
-                                                                    <a href="javascript:void(0)" onClick={() => alert("hello")} className="text-decoration-none text-info">Remove</a>
+                                                                    <a href="javascript:void(0)" onClick={() => removeFromCart(item._id)} className="text-decoration-none text-info">Remove</a>
                                                                     <a href="javascript:void(0)" onClick={() => alert("hello")} className="text-decoration-none text-info">Move to Cart</a>
                                                                 </Stack>
                                                             </Row>
@@ -330,7 +330,7 @@ function Cart() {
                                                                 <Col xs="auto" className="me-auto">
                                                                     <Card.Title className="cart-course-title mb-0" title="Python From Scratch & Selenium WebDriver QA Automation 2022">Python From Scratch & Selenium WebDriver QA Automation 2022</Card.Title>
 
-                                                                    <span>By Sanjib Dolai</span>
+                                                                    <span>By {item.course.instructor.name}</span>
                                                                 </Col>
                                                                 <Col xs="auto" >
                                                                     <h5 >{item.course.courseType === 'Free' ? "Free" : currencyFormat(item.course.coursePrice)}</h5>
@@ -343,7 +343,7 @@ function Cart() {
                                                                     direction="horizontal"
                                                                     gap={3}
                                                                 >
-                                                                    <a href="javascript:void(0)" onClick={() => alert("hello")} className="text-decoration-none text-info">Remove</a>
+                                                                    <a href="javascript:void(0)" onClick={() => removeFromCart(item._id)} className="text-decoration-none text-info">Remove</a>
                                                                     <a href="javascript:void(0)" onClick={() => alert("hello")} className="text-decoration-none text-info">Move to Cart</a>
                                                                 </Stack>
                                                             </Row>
