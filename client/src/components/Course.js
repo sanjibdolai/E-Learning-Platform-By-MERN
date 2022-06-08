@@ -3,7 +3,7 @@ import { Col, Container, Row, Breadcrumb, Badge, Stack, Accordion, Button, ListG
 import ReactPlayer from "react-player";
 import Rating from "react-rating";
 import { Link, useParams } from "react-router-dom";
-import { currencyFormat, minutesToHoursMinutes } from "../utilities/util";
+import { currencyFormat, minutesToHoursMinutes,getTotalCourseDuration ,getTotalLessions} from "../utilities/util";
 function CustomToggle({ children, eventKey, callback }) {
     const { activeEventKey } = useContext(AccordionContext);
     const decoratedOnClick = useAccordionButton(
@@ -33,22 +33,8 @@ function Course() {
     const [previewLession, setPreviewLession] = useState({ showPreviewModal: false, lession: null });
     const params = useParams();
     const [wish, setWish] = useState("far");
-    const getTotalLessions = () => {
-        let totalLesstions = 0;
-        course.topics.forEach(element => {
-            totalLesstions += element.lessions.length;
-        });
-        return totalLesstions;
-    }
-    const getTotalCourseDuration = () => {
-        let totalDuration = 0;
-        course.topics.forEach(topic => {
-            topic.lessions.forEach(lession => {
-                totalDuration += lession.lessionDuration;
-            });
-        });
-        return minutesToHoursMinutes(totalDuration);
-    }
+    
+   
     const getTotalTopicDuration = (topicId) => {
         let totalDuration = 0;
         const topic1=course.topics.find(item=> item._id===topicId).lessions.forEach(lession => {
@@ -133,9 +119,9 @@ function Course() {
                                 <Stack direction="horizontal" gap={3} className="my-2 ms-1">
                                     <span>{course.topics.length} sections</span>
                                     <span>•</span>
-                                    <span>{getTotalLessions()} lessions</span>
+                                    <span>{getTotalLessions(course)} lessions</span>
                                     <span>•</span>
-                                    <span>{getTotalCourseDuration()} total length</span>
+                                    <span>{getTotalCourseDuration(course)} total length</span>
                                 </Stack>
                                 <Accordion>
                                     {course.topics && course.topics.map((topic, index) =>

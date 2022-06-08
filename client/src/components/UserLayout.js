@@ -1,13 +1,12 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { memo, useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
 import AuthNav from "../components/AuthNav";
 import SearchBar from "../components/SearchBar";
 
 function UserLayout(props) {
-    console.log("UserLayout");
-    console.log(props);
+    const [topNavTitle,setTopNavTitle]=useState(<SearchBar/>);
     const [sideBarProps, setSideBarProps] = useState({ width: 220, spanHide: '', tooltipShow: false, smallScreen: false });
     const [arrowIcon, setArrowIcon] = useState("fa-angle-double-left");
     const sideBarPropsChange = () => {
@@ -47,6 +46,10 @@ function UserLayout(props) {
         };
     }, []);
 
+    const onChildComponentChange=(com)=>{
+        setTopNavTitle(com);
+    }
+
     return (
         <>
             <div id="sidenav" className="sidenav m-0 p-0">
@@ -58,15 +61,41 @@ function UserLayout(props) {
                     <a className="me-auto" onClick={sideBarPropsChange} >
                         <i className={"fas " + arrowIcon}></i>
                     </a>
-                    <Nav className="me-auto">
-                        <SearchBar />
+                    <Nav className="me-auto" >
+                       {topNavTitle}
+                    </Nav>
+                    {props.pageType && props.pageType==='Learner' &&
+                    <Nav className="me-3">
+                    <Nav.Link
+                                as={Link}
+                                to="/cart"
+                                className='position-relative text-info'
+                            >
+                                <i className="fas fa-shopping-cart fs-3"></i>
+                                <span id="cartCount" className="position-absolute top-5 start-10 translate-middle badge rounded-pill bg-warning">
+                                    
+                                </span>
+                            </Nav.Link>
+                    </Nav>
+                    }
+                    <Nav className="me-4">
+                    <Nav.Link
+                                        as={Link}
+                                        to="/notifications"
+                                        className='position-relative text-info'
+                                    >
+                                        <i className="fa-solid fa-bell fs-3"></i>
+                                        <span className="position-absolute top-5 start-10 translate-middle badge rounded-pill bg-warning">
+                                            999
+                                        </span>
+                                    </Nav.Link>
                     </Nav>
                     <Nav className="pe-5">
                         <AuthNav userDetails={props.userDetails} />
                     </Nav>
                 </Navbar>
                 <Container fluid className="py-2">
-                    <Outlet />
+                    <Outlet context={[topNavTitle,setTopNavTitle]}/>
                 </Container>
             </div>
         </>

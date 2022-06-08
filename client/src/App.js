@@ -20,9 +20,11 @@ import InstructorCourses from './instructor/MyCourses';
 import Lessions from './instructor/Lessions';
 import { initialState, reducer } from './reducer/UseReducer';
 import LearnerCourse from './learner/Course';
+import LearnerCourses from './learner/Courses';
 import Course from './components/Course';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
+import OrderSuccess from './components/OrderSuccess';
 
 export const UserContext = createContext();
 
@@ -38,18 +40,20 @@ export const AllRoutes=()=> {
         <Route path="login" element={<Login />}></Route>
         <Route path="signup" element={<SignUp />}></Route>
         <Route path="cart" element={<Cart />}></Route>
-        <Route path="checkout" element={<Checkout />}></Route> 
         <Route path="*" element={<NoPage />}></Route>
         <Route path="course/:id" element={<Course />}></Route>
+        <Route path="order/success" element={<OrderSuccess />}></Route> 
+        <Route path="order/failed" element={<Checkout />}></Route> 
       </Route>
       <Route path="/learner/" element={<Learner />}>
         <Route index element={<Home />} />
-        <Route path="courses" element={<Home />}></Route>
+        <Route path="courses" element={<LearnerCourses />}></Route>
+        <Route path="course/:id" element={<LearnerCourse />}></Route>
         <Route path="profile" element={<Home />}></Route>
         <Route path="settings" element={<Home />}></Route>
         <Route path="*" element={<NoPage />}></Route>
       </Route>
-      <Route path="/learner/course/:id" element={<LearnerCourse />}></Route>
+      
 
 
     {/* <Route path="/instructor/" element={(state.isLoggedIn && state.userType === 'INSTRUCTOR')?<Instructor />:<Navigate replace to="/login" />}> */}
@@ -99,6 +103,9 @@ function App() {
       const data = await res.json();
       if (data.userType === 'Instructor') {
         dispatch({ type: 'INSTRUCTOR_LOGIN' });
+      }
+      if (data.userType === 'Learner') {
+        dispatch({ type: 'LEARNER_LOGIN' });
       }
 
     } catch (error) {

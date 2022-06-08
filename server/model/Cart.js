@@ -10,6 +10,10 @@ const cartSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref:'Course',
         required:true
+    },
+    cartStatus:{
+        type: String,
+        required: true
     }
 },{ timestamps: true});
 

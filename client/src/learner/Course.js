@@ -2,74 +2,53 @@ import { Col, Container, Row, Accordion, ListGroup, Tabs, Tab, Ratio, Navbar, Na
 
 import ReactPlayer from 'react-player'
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import Logo from "../components/Logo";
-import AuthNav from "../components/AuthNav";
+import { Link, useOutletContext, useParams } from "react-router-dom";
+import { getEnrolledCourseDetails, updateEnrolledCourseStatus } from "../utilities/commonfunctions";
 
-function Course() {
+function Course({onChildComponentChange}) {
 
     const [course, setCourse] = useState({});
     const [currentLession, setCurrentLession] = useState({});
+    const [currentTopicId, setCurrentTopicId ]= useState();
     const params = useParams();
-
-    const getCourseDetails = async () => {
-
-        try {
-            const res = await fetch(`/api/course/${params.id}`, {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json"
-                },
-            });
-
-            if (!res.status === 200) {
-                throw new Error(res.error)
-            }
-            const data = await res.json();
-            console.log(data);
-            setCourse({ ...data });
-
-        } catch (error) {
-            console.log(error);
-        }
-
+    const [topNavTitle,setTopNavTitle]=useOutletContext();
+    const [courseStatus,setCourseStatus]=useState();
+    
+    const getCourseStatus=(data)=>{
+        setCourseStatus(data);
     }
+    
 
     useEffect(() => {
-        getCourseDetails();
+        getEnrolledCourseDetails(params.id,setCourse,(data)=>{
+            setTopNavTitle(<h2>{data.courseId.courseTitle}</h2>);
+            getCourseStatus(data);
+        });
+        
     }, []);
+
+    const onVideoFinish=()=>{
+        var obj={
+            courseId:course._id,
+            topicId:currentTopicId,
+            lessionId:currentLession._id
+        };
+        updateEnrolledCourseStatus(obj,getCourseStatus);
+    }
 
     return (
         <>
-            <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-                <Container fluid className="px-5">
-                    <Navbar.Brand as={Link} to="/">
-                        <Logo width="40rem" height="40rem" />
-                    </Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="mx-auto" >
-                            <NavItem >
-                                <h3>{course.courseTitle}</h3>
-                            </NavItem>
-                        </Nav>
-                        <Nav className='my-sm-3 my-lg-auto'>
-                            <AuthNav />
-                        </Nav>
-                    </Navbar.Collapse>
-
-                </Container>
-            </Navbar>
+        {course &&
             <Container fluid className="py-2">
                 <Row>
-                    <Col lg="9">
-                        <Container fluid className="bg-dark w-100 px-lg-5 px-sm-0">
+                    <Col lg="8" className="px-0">
+                        <Container fluid className="bg-dark w-100  px-sm-0">
                             <Ratio aspectRatio="16x9" className="px-lg-5 px-sm-0">
                                 <ReactPlayer
                                     url={currentLession.lessionVideoURL}
                                     width="100%" height="100%"
                                     controls={true}
+                                    onEnded={onVideoFinish}
                                 />
                             </Ratio>
 
@@ -98,11 +77,11 @@ function Course() {
                         </Tabs>
 
                     </Col>
-                    <Col lg="3">
+                    <Col lg="4" className="pe-0 ps-2">
                         <Accordion >
                             {course.topics && course.topics.map((topic, index) =>
                                 <Accordion.Item key={index} eventKey={topic._id}>
-                                    <Accordion.Header>
+                                    <Accordion.Header onClick={()=>setCurrentTopicId(topic._id)}>
                                         <h6>Section 1: {topic.topicName}</h6>
                                     </Accordion.Header>
                                     <Accordion.Body className="p-0">
@@ -132,6 +111,7 @@ function Course() {
                     </Col>
                 </Row>
             </Container>
+}
         </>
     );
 }

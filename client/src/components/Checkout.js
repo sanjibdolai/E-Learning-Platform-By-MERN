@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { Row } from "react-bootstrap";
 
-    
-
-
 function Checkout(){
 
     const [cartItems, setCartItems] = useState([]);

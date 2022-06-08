@@ -380,3 +380,51 @@
     font-family: 'FontAwesome';
     content: "\f101" !important;
 }
+
+
+.mfix #modal{
+    width:1200 px !important;
+    max-width: 100% !important;
+}
+
+
+.tab-button{
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+    --bs-text-opacity: 1;
+    color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
+    
+    padding: 5px 5;
+    border-bottom: 6px solid transparent;
+    border-bottom-color: rgba(255,255,255,.7);
+    color: #fff;
+}
+
+.video-thumbnail {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+.video-thumbnail:before {
+      position:absolute;
+      top: 6rem;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      content: "\f01d";
+      font-family: FontAwesome;
+      font-size: 100px;
+      color: #fff;
+      opacity: 0;
+      text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
+}
+.video-thumbnail:hover:before {
+      transition:opacity linear 100ms;
+      opacity: 1;
+}
+
+
+
+.course-card-image{
+    height: 12rem;
+}

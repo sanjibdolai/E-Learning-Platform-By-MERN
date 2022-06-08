@@ -3,14 +3,14 @@ import UserLayout from "../components/UserLayout";
 
 function Learner() {
     const menuItems = [
-        { itemName: "My Courses", itemURL: "/learner/courses", iconClass: "fa-brands fa-audible" },
-        { itemName: "Profile", itemURL: "/learner/profile", iconClass: "far fa-address-card" },
-        { itemName: "Settings", itemURL: "/learner/settings", iconClass: "fas fa-cogs" }
+        { itemName: "My Courses", itemURL: "/learner/courses", itemIcon: "fa-brands fa-audible" },
+        { itemName: "Profile", itemURL: "/learner/profile", itemIcon: "far fa-address-card" },
+        { itemName: "Settings", itemURL: "/learner/settings", itemIcon: "fas fa-cogs" }
     ];
-    const userDetails={name:"Learner Name"}
+
     return (
         <>
-        <UserLayout menuItems={menuItems} userDetails={userDetails}/>
+        <UserLayout menuItems={menuItems} pageType="Learner" />
         </>
     );
 }

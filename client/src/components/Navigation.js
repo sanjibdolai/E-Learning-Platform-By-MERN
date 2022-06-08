@@ -1,4 +1,4 @@
-import React, { memo, useContext, useState } from 'react';
+import React, { memo, useContext, useEffect, useState } from 'react';
 import { Container, Navbar, Nav, ListGroup, NavItem, NavDropdown, DropdownButton, ButtonGroup, Dropdown, Form, FormControl } from 'react-bootstrap';
 import { Link, NavLink } from 'react-router-dom';
 import AuthNav from './AuthNav';
@@ -6,8 +6,10 @@ import Logo from './Logo';
 import SearchBar from './SearchBar';
 import { UserContext } from '../App';
 import swal from 'sweetalert';
+import { getCartCount } from '../utilities/util';
 
 function Navigation() {
+
 
     const { state, dispatch } = useContext(UserContext);
 
@@ -41,6 +43,11 @@ function Navigation() {
             );
         },
     );
+    
+    useEffect(() => {
+        getCartCount();
+        return;
+    }, []);
 
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
@@ -60,8 +67,8 @@ function Navigation() {
                                 className='position-relative text-info'
                             >
                                 <i className="fas fa-shopping-cart fs-3"></i>
-                                <span className="position-absolute top-5 start-10 translate-middle badge rounded-pill bg-warning">
-                                    2
+                                <span id="cartCount" className="position-absolute top-5 start-10 translate-middle badge rounded-pill bg-warning">
+                                    
                                 </span>
                             </Nav.Link>
                         </ListGroup.Item>
@@ -128,6 +135,24 @@ function Navigation() {
                                 onClick={() => swal("Comming Soon...")}
                             />
                         </NavItem>
+                        {state.isLoggedIn &&
+                        <>
+                        <NavItem className='ms-lg-5'>
+                            <Nav.Link
+                            as={Link}
+                            to="/learner/courses" >
+                                My Courses
+                            </Nav.Link>
+                        </NavItem>
+                        <NavItem >
+                            <Nav.Link
+                            as={Link}
+                            to="/learner/profile" >
+                                My Profile
+                            </Nav.Link>
+                        </NavItem>
+                        </>
+                        }
                     </Nav>
 
                 </Navbar.Collapse>

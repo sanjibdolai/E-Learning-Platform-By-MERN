@@ -7,21 +7,25 @@ const orderSchema = new Schema({
         required:true
     },
     courses:[{
-        course_Id:{
+        courseId:{
         type: Schema.Types.ObjectId,
         ref:'Course',
         required:true
         },
-        course_price:{
+        courseType:{
+            type:String,
+            required:false
+        },
+        orderPrice:{
             type:Number,
             required:false
         },
-        course_mrp:{
+        courseMRP:{
             type:Number,
             required:false
         },
     }],
-    total_price:{
+    totalPrice:{
         type:Number,
         required:false
     }
