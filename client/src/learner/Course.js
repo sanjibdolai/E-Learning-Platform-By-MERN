@@ -5,19 +5,24 @@ import { useEffect, useState } from "react";
 import { Link, useOutletContext, useParams } from "react-router-dom";
 import { getEnrolledCourseDetails, updateEnrolledCourseStatus } from "../utilities/commonfunctions";
 
-function Course({onChildComponentChange}) {
+function Course() {
 
     const [course, setCourse] = useState({});
     const [currentLession, setCurrentLession] = useState({});
     const [currentTopicId, setCurrentTopicId ]= useState();
     const params = useParams();
     const [topNavTitle,setTopNavTitle]=useOutletContext();
-    const [courseStatus,setCourseStatus]=useState();
+    const [courseProgress,setCourseProgress]=useState();
     
     const getCourseStatus=(data)=>{
-        setCourseStatus(data);
+        setCourse(data.courseId);
+        setCourseProgress(data.courseProgress);
     }
     
+    const getLessionStatus=(topicId,lessionId)=>{
+       var status=(courseProgress[topicId] && courseProgress[topicId][lessionId] && courseProgress[topicId][lessionId]==="Completed") ? true :false;
+        return status;
+    }
 
     useEffect(() => {
         getEnrolledCourseDetails(params.id,setCourse,(data)=>{
@@ -57,22 +62,11 @@ function Course({onChildComponentChange}) {
                             <Tab eventKey="content" title="Content">
                                <div dangerouslySetInnerHTML={{ __html: currentLession.lessionContent }} />
                             </Tab>
-                            <Tab eventKey="notes" title="Notes">
-                                O thou, my lovely boy, who in thy power Dost hold Time's fickle glass, his fickle hour; Who hast by waning grown, and therein show'st Thy lovers withering, as thy sweet self grow'st. If Nature, sovereign mistress over wrack, As thou goest onwards, still will pluck thee back, She keeps thee to this purpose, that her skill May time disgrace and wretched minutes kill. Yet fear her, O thou minion of her pleasure! She may detain, but not still keep, her treasure:
-                            </Tab>
-
                             <Tab eventKey="discussion" title="Discussion">
-                                O thou, my lovely boy, who in thy power Dost hold Time's fickle glass, his fickle hour; Who hast by waning grown, and therein show'st Thy lovers withering, as thy sweet self grow'st. If Nature, sovereign mistress over wrack, As thou goest onwards, still will pluck thee back, She keeps thee to this purpose, that her skill May time disgrace and wretched minutes kill. Yet fear her, O thou minion of her pleasure! She may detain, but not still keep, her treasure:
-                            </Tab>
-                            <Tab eventKey="tools" title="Learning Tools">
-                                O thou, my lovely boy, who in thy power Dost hold Time's fickle glass, his fickle hour; Who hast by waning grown, and therein show'st Thy lovers withering, as thy sweet self grow'st. If Nature, sovereign mistress over wrack, As thou goest onwards, still will pluck thee back, She keeps thee to this purpose, that her skill May time disgrace and wretched minutes kill. Yet fear her, O thou minion of her pleasure! She may detain, but not still keep, her treasure:
-                            </Tab>
-
-                            <Tab eventKey="overview" title="Course Overview">
-                                O thou, my lovely boy, who in thy power Dost hold Time's fickle glass, his fickle hour; Who hast by waning grown, and therein show'st Thy lovers withering, as thy sweet self grow'st. If Nature, sovereign mistress over wrack, As thou goest onwards, still will pluck thee back, She keeps thee to this purpose, that her skill May time disgrace and wretched minutes kill. Yet fear her, O thou minion of her pleasure! She may detain, but not still keep, her treasure:
+                                
                             </Tab>
                             <Tab eventKey="reviews" title="Reviews">
-                                O thou, my lovely boy, who in thy power Dost hold Time's fickle glass, his fickle hour; Who hast by waning grown, and therein show'st Thy lovers withering, as thy sweet self grow'st. If Nature, sovereign mistress over wrack, As thou goest onwards, still will pluck thee back, She keeps thee to this purpose, that her skill May time disgrace and wretched minutes kill. Yet fear her, O thou minion of her pleasure! She may detain, but not still keep, her treasure:
+                              
                             </Tab>
                         </Tabs>
 
@@ -98,7 +92,9 @@ function Course({onChildComponentChange}) {
                                                         <div className="fw-bold">{inx + 1}. {lession.lessionTitle}</div>
                                                         <span><i className="fa-solid fa-circle-play"></i> {lession.lessionDuration}min</span>
                                                     </div>
-
+                                                    {courseProgress && getLessionStatus(topic._id,lession._id) &&
+                                                    <i className="fa fa-check-circle mt-3 text-success"></i>
+                                                    }
                                                 </ListGroup.Item>
                                             )}
 

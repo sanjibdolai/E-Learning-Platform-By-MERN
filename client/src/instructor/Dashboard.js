@@ -1,37 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import CourseCard from "../components/CourseCard";
+import CourseCard from "./CourseCard";
+import { getInstructorCourses } from '../utilities/commonfunctions';
+import { currencyFormat } from '../utilities/util';
 function Dashboard() {
     
     const [courses, setCourses] = useState([]);
 
-    const getCourses = async () => {
-        try {
-            const res = await fetch("/instructor/courses", {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json"
-                },
-                credentials: "include"
-            });
-
-            if (!res.status === 200) {
-                throw new Error(res.error)
-            }
-            const data = await res.json();
-            console.log(data);
-            setCourses([...data]);
-
-        } catch (error) {
-            console.log(error);
-        }
-
-    }
+    
 
     useEffect(() => {
-        getCourses();
+        getInstructorCourses((data)=>{setCourses(data)});
     }, []);
+
     return (
         <>
             <div className="row dashboard-cards">
@@ -46,7 +27,7 @@ function Dashboard() {
                                 </span>
                             </div>
                             <div className="col-7 text-end pt-2">
-                                <h1>50</h1>
+                                <h1>{courses.length}</h1>
                                 <h4>Total Courses</h4>
                             </div>
                         </div>
@@ -100,7 +81,7 @@ function Dashboard() {
                                 </span>
                             </div>
                             <div className="col-7 text-end pt-2">
-                                <h1>500 $</h1>
+                                <h1>{currencyFormat(9000)}</h1>
                                 <h4>Total Revenue</h4>
                             </div>
                         </div>

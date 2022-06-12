@@ -21,7 +21,8 @@ function Home() {
           <Carousel.Item>
             <img
               className="d-block w-100"
-              src="https://www.upgrad.com/_next/image?url=https%3A%2F%2Fik.imagekit.io%2Fupgrad1%2Fmarketing-platform-assets%2Fsprites%252Fimages%2FdataScience__1644555732575.png&w=1920&q=75"
+              height={300}
+              src="https://t4.ftcdn.net/jpg/02/36/21/57/360_F_236215734_DtGW6nWViuE5ccmbv88ITDIvKKQvVoqZ.jpg"
               alt="First slide"
             />
 
@@ -29,14 +30,16 @@ function Home() {
           <Carousel.Item>
             <img
               className="d-block w-100"
-              src="https://www.upgrad.com/_next/image?url=https%3A%2F%2Fik.imagekit.io%2Fupgrad1%2Fmarketing-platform-assets%2Fsprites%252Fimages%2FdataScience__1644555732575.png&w=1920&q=75"
+              height={300}
+              src="https://aieinfo.com/images/testimonials/e2.jpg"
               alt="Second slide"
             />
           </Carousel.Item>
           <Carousel.Item>
             <img
               className="d-block w-100"
-              src="https://www.upgrad.com/_next/image?url=https%3A%2F%2Fik.imagekit.io%2Fupgrad1%2Fmarketing-platform-assets%2Fsprites%252Fimages%2FdataScience__1644555732575.png&w=1920&q=75"
+              height={300}
+              src="https://blog.commlabindia.com/wp-content/uploads/2017/04/why-elearning.png"
               alt="Third slide"
             />
           </Carousel.Item>

@@ -67,7 +67,7 @@ export const getEnrolledCourses = async (setback,callback) => {
     }
     const data = await res.json();
     if(setback){
-      setback(data.map(e=>e.courseId));
+      setback(data);
     }
     
     if(callback){
@@ -98,6 +98,7 @@ export const getEnrolledCourseDetails = async (courseId,setback,callback) => {
           throw new Error(res.error)
       }
       const data = await res.json();
+      console.log(data);
       if(setback){
         setback({ ...data.courseId });
       }
@@ -113,7 +114,7 @@ export const getEnrolledCourseDetails = async (courseId,setback,callback) => {
 
 }
 
-export const updateEnrolledCourseStatus = async (obj,setback,callback) => {
+export const updateEnrolledCourseStatus = async (obj,callback) => {
 
   try {
       const res = await fetch("/api/updateenrolledcoursestatus", {
@@ -132,7 +133,7 @@ export const updateEnrolledCourseStatus = async (obj,setback,callback) => {
           throw new Error(res.error)
       }
       const data = await res.json();
-      
+      console.log(data);
       
       if(callback){
         callback(data);
@@ -142,5 +143,52 @@ export const updateEnrolledCourseStatus = async (obj,setback,callback) => {
   } catch (error) {
       console.log(error);
   }
+
+}
+
+export const getInstructorCourses = async (callback) => {
+  try {
+      const res = await fetch("/instructor/courses", {
+          method: "GET",
+          headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+          },
+          credentials: "include"
+      });
+
+      if (!res.status === 200) {
+          throw new Error(res.error)
+      }
+      const data = await res.json();
+      callback(data);
+
+  } catch (error) {
+      console.log(error);
+  }
+
+}
+
+export const getUserDetails = async (callback) => {
+  try {
+      const res = await fetch("/userdata", {
+          method: "GET",
+          headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+          },
+          credentials: "include"
+      });
+
+      if (!res.status === 200) {
+          throw new Error(res.error)
+      }
+      const data = await res.json();
+      callback(data);
+
+  } catch (error) {
+      console.log(error);
+  }
+
 
 }

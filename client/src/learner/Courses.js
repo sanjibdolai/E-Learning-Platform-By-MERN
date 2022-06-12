@@ -1,10 +1,10 @@
 import { lazy, memo, Suspense, useEffect, useState, } from "react";
-import { Button,ButtonGroup, Col, Container, Form, FormControl, InputGroup, Nav, Navbar, Row } from "react-bootstrap";
+import { Button, Col,  Form, FormControl, InputGroup,  Row } from "react-bootstrap";
 import Select from 'react-select';
-import SearchBar from "../components/SearchBar";
 import moment from "moment";
 import { getEnrolledCourses } from "../utilities/commonfunctions";
 import { useOutletContext } from "react-router-dom";
+import { getCourseProgressPercentage } from "../utilities/util";
 const CourseCard = lazy(() => import('./CourseCard'));
 function Courses() {
     const [topNavTitle,setTopNavTitle]=useOutletContext();
@@ -36,13 +36,15 @@ function Courses() {
     const sortBy=(e)=>{
         var courses=[...myCourses];
         if(e.value==='Title Z - A'){
-            courses.sort((a,b)=> (a.courseTitle > b.courseTitle) ? 1 : ((b.courseTitle > a.courseTitle) ? -1 : 0)).reverse();
+            courses.sort((a,b)=> (a.courseId.courseTitle > b.courseId.courseTitle) ? 1 : ((b.courseId.courseTitle > a.courseId.courseTitle) ? -1 : 0)).reverse();
             
         }else if(e.value==='Title A - Z'){
-            courses.sort((a,b)=> (a.courseTitle > b.courseTitle) ? 1 : ((b.courseTitle > a.courseTitle) ? -1 : 0));
+            courses.sort((a,b)=> (a.courseId.courseTitle > b.courseId.courseTitle) ? 1 : ((b.courseId.courseTitle > a.courseId.courseTitle) ? -1 : 0));
         }else if(e.value==='Recently Enrolled'){
             courses.sort((a,b)=> moment(b.createdAt)-moment(a.createdAt));
             
+        }else if(e.value==='Recently Accessed'){
+            courses.sort((a,b)=> moment(b.updatedAt)-moment(a.updatedAt));
         }
         setMyCourses(courses);
     }
@@ -87,15 +89,18 @@ function Courses() {
                     </Row>
                 </Col>
             </Row>
-            <Row>
+            <Row >
                 <Suspense fallback={<h1 className="text-center">Loading...</h1>}>
                     {myCourses.map((item,index)=>
                     <>
                         <Col key={index} lg={3} md={4} sm={6} className="mt-3">
-                            <CourseCard  item={item}/>
+                            <CourseCard  item={item.courseId} courseProgressPercentage={getCourseProgressPercentage(item)}/>
                         </Col>
                     </>
                     )}
+                    {(myCourses && myCourses.length==0) &&
+                        <h2 className="text-center mt-5">No Course Found...</h2>
+                    }
                 </Suspense>
             </Row>
         

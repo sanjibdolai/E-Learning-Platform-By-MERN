@@ -86,7 +86,7 @@ function UserLayout(props) {
                                     >
                                         <i className="fa-solid fa-bell fs-3"></i>
                                         <span className="position-absolute top-5 start-10 translate-middle badge rounded-pill bg-warning">
-                                            999
+                                            99
                                         </span>
                                     </Nav.Link>
                     </Nav>

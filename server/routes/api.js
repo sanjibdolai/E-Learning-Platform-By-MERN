@@ -203,7 +203,7 @@ const paymentSuccess=async(req,res)=>{
     const order = new Order({ ...orderObj });
     await order.save();
     for(var e of coursesObj){
-      const enrolledCourse=new EnrolledCourse({userId: req.userId,courseId:e.courseId});
+      const enrolledCourse=new EnrolledCourse({userId: req.userId,courseId:e.courseId,courseProgress:{}});
       await enrolledCourse.save();
     }
     
@@ -242,10 +242,17 @@ router.post("/api/enrolledcourse", Authenticate, async (req, res) => {
 
 router.post("/api/updateenrolledcoursestatus", Authenticate, async (req, res) => {
   try {
-    const enrolledCourse = await EnrolledCourse.findOne({ userId: req.userId,courseId:req.body.courseId }).populate({
-      path: "courseId"
-    });
-    res.status(200).json(enrolledCourse);
+    const enrolledCourse  =await EnrolledCourse.findOne({ "userId":req.userId,"courseId":req.body.courseId});
+    const data=JSON.parse(JSON.stringify(enrolledCourse));
+    const courseProgress={...data.courseProgress};
+    courseProgress[req.body.topicId]={...courseProgress[req.body.topicId],[req.body.lessionId]:"Completed"};
+    const updatedData=await EnrolledCourse.findOneAndUpdate(
+      { "userId":req.userId,"courseId":req.body.courseId},
+      {"courseProgress":courseProgress},{ "upsert": true }
+      ).populate({
+        path: "courseId"
+      });
+    res.status(200).json(updatedData);
    
   } catch (error) {
     console.log(error);

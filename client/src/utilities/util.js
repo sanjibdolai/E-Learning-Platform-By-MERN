@@ -69,3 +69,31 @@ export const loadScript = (src) => {
     document.body.appendChild(script);
   });
 };
+
+export const getTotalCourseDurationV2 = (course) => {
+  let totalDuration = 0;
+  course.topics.forEach(topic => {
+      topic.lessions.forEach(lession => {
+          totalDuration += lession.lessionDuration;
+      });
+  });
+  return totalDuration;
+}
+
+export const getCourseProgressPercentage = (course) => {
+  var totalDuration=getTotalCourseDurationV2(course.courseId);
+  console.log(totalDuration);
+  var completedDuration=0;
+  var lessions;
+  for(var key in course.courseProgress){
+    lessions=course.courseId.topics.find(e=>e._id===key).lessions;
+    for(var i in course.courseProgress[key]){
+      completedDuration += lessions.find(e=>e._id===i).lessionDuration;
+    }
+  }
+  var percentage=0;
+  if(totalDuration !=0){
+    percentage=Math.round((completedDuration/totalDuration)*100);
+  }
+  return percentage;
+}

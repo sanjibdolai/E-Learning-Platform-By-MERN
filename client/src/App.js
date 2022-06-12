@@ -15,7 +15,7 @@ import Admin from './admin/Admin';
 import AddCourse from './instructor/AddCourse';
 import LearnersTable from './instructor/LearnersTable';
 import InstructorDashboard from './instructor/Dashboard';
-import InstructorProfile from './instructor/Profile';
+import Profile from './components/Profile';
 import InstructorCourses from './instructor/MyCourses';
 import Lessions from './instructor/Lessions';
 import { initialState, reducer } from './reducer/UseReducer';
@@ -49,7 +49,7 @@ export const AllRoutes=()=> {
         <Route index element={<Home />} />
         <Route path="courses" element={<LearnerCourses />}></Route>
         <Route path="course/:id" element={<LearnerCourse />}></Route>
-        <Route path="profile" element={<Home />}></Route>
+        <Route path="profile" element={<Profile pageType="Learner" />}></Route>
         <Route path="settings" element={<Home />}></Route>
         <Route path="*" element={<NoPage />}></Route>
       </Route>
@@ -64,7 +64,7 @@ export const AllRoutes=()=> {
         <Route path="lessons" element={<Lessions />}></Route>
         <Route path="addcourse" element={<AddCourse />}></Route>
         <Route path="learners" element={<LearnersTable />}></Route>
-        <Route path="profile" element={<InstructorProfile />}></Route>
+        <Route path="profile" element={<Profile pageType="Instructor"/>}></Route>
         <Route path="settings" element={<Home />}></Route>
         <Route path="*" element={<NoPage />}></Route>
       </Route>
@@ -74,7 +74,7 @@ export const AllRoutes=()=> {
         <Route path="courses" element={<Home />}></Route>
         <Route path="instructors" element={<Home />}></Route>
         <Route path="learners" element={<Home />}></Route>
-        <Route path="profile" element={<Home />}></Route>
+        <Route path="profile" element={<Profile />}></Route>
         <Route path="settings" element={<Home />}></Route>
         <Route path="*" element={<NoPage />}></Route>
       </Route>

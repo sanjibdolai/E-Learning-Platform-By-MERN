@@ -12,31 +12,10 @@ const enrolledCourseSchema = new Schema({
         required: true
     },
     courseProgress:{
-        topics: [
-            {
-                topicId: {
-                    type: String,
-                    required: true
-                },
-                status:{
-                    type: String,
-                    required: false
-                },
-                lessions: [
-                    {
-                        lessionId: {
-                            type: String,
-                            required: true
-                        },
-                        status:{
-                            type: String,
-                            required: true
-                        }
-                    }
-                ]
-            }
-        ]
-    },
+            type:Map,
+            of:Map,
+            required:true
+    }
     
 },{ timestamps: true });
 

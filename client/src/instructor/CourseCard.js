@@ -11,9 +11,6 @@ function CourseCard({ item ,courseProgressPercentage}) {
       <>
       {item &&
         <Card className="course-card w-100 m-1" >
-            <Link
-            to={"/learner/course/" + item._id}
-            className="video-thumbnail text-decoration-none text-success">
             
                 <Card.Img variant="top" className="course-card-image" src={`/uploads/images/${item.courseImage}`}/>
             
@@ -22,12 +19,24 @@ function CourseCard({ item ,courseProgressPercentage}) {
                 <Card.Text>
                     {item.instructor.name}
                 </Card.Text>
-                <ProgressBar now={courseProgressPercentage} label={`${courseProgressPercentage}%`} />
+                <span className="text-warning">3.7 </span>
+
+              <Rating
+                readonly={true}
+                initialRating={3.7}
+                emptySymbol={"fa-regular fa-star text-warning fs-6"}
+                fullSymbol={"fa-solid fa-star text-warning fs-6"} />
+              <span > (200)</span>
+              <span className="float-end">
+                {item.courseType === 'Free' ? "Free" : currencyFormat(item.coursePrice)}
+              </span>
+              <Card.Text className="mt-2">
+                Enrolled: 200 
+                <Link to={"/course/" + item._id} className="float-end text-success ms-2"><i className="fa fa-eye fs-4"></i></Link>
+                <span  className="float-end text-success" ><i className="fa fa-edit fs-4"></i></span>
                 
-            
+                </Card.Text>
             </Card.Body>
-            
-          </Link>
         </Card>
       }
     </>
