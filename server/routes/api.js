@@ -66,7 +66,11 @@ router.get("/api/course/:id", async (req, res) => {
       select: 'name'
     });
   const instructorCourses = await Course.find({ instructor: course.instructor._id });
-  res.status(200).json({ course, instructorCourses });
+  const reviews = await Review.find({ courseId: id}).populate({
+    path: "userId"
+  });
+  res.status(200).json({ course, instructorCourses,reviews });
+
 });
 router.get("/instructor/courses", UserTypeAuthenticate('Instructor'), async (req, res) => {
   try {
@@ -143,6 +147,7 @@ router.post("/api/movetowishlist", Authenticate, async (req, res) => {
 
 const Razorpay = require("razorpay");
 const EnrolledCourse = require("../model/EnrolledCourse");
+const Review = require("../model/Review");
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -258,5 +263,28 @@ router.post("/api/updateenrolledcoursestatus", Authenticate, async (req, res) =>
     console.log(error);
   }
 });
+
+router.post("/api/addreview", Authenticate, async (req, res) => {
+  try {
+    const review = new Review({ ...req.body,userId:req.userId });
+    await review.save();
+    res.status(200).json({ message: "Successfully Added." });
+   
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get("/api/reviews/:id", async (req, res) => {
+  const {
+    id
+  } = req.params;
+  const reviews = await Review.find({ courseId: id}).populate({
+    path: "userId"
+  });
+  res.status(200).json({ reviews });
+
+});
+
 
 module.exports = router;

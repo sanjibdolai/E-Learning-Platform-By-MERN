@@ -25,6 +25,7 @@ import Course from './components/Course';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
 import OrderSuccess from './components/OrderSuccess';
+import Search from './components/Search';
 
 export const UserContext = createContext();
 
@@ -36,6 +37,7 @@ export const AllRoutes=()=> {
       <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="search" element={<Search />}></Route>
         <Route path="contact" element={<Contact />}></Route>
         <Route path="login" element={<Login />}></Route>
         <Route path="signup" element={<SignUp />}></Route>

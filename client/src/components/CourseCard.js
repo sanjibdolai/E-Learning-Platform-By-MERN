@@ -1,12 +1,43 @@
-import { memo, useState } from "react";
+import { memo, useState, useEffect } from "react";
 import { Button, Card, Stack, Badge } from "react-bootstrap";
 import Rating from "react-rating";
 import { Link, useNavigate } from "react-router-dom";
+import { getCartItems, getEnrolledCourses } from "../utilities/commonfunctions";
 import { currencyFormat } from "../utilities/util";
 function CourseCard({ item }) {
   //console.log("CourseCard");
   const [wish, setWish] = useState("far");
+  const [cartItems, setCartItems] = useState([]);
+  const [saveForLaterItems, setSaveForLaterItems] = useState([]);
+  const [wishlistItems, setWishlistItems] = useState([]);
+  const [enrolledcourse, setEnrolledcourse] = useState([]);
   const navigate = useNavigate();
+
+
+
+  useEffect(() => {
+    getAllData();
+    return;
+  }, []);
+
+  const getAllData = () => {
+    getEnrolledCourses((data) => {
+      setEnrolledcourse(data);
+    });
+    getCartItems((data) => {
+      setCartItems(data.filter(e => e.cartStatus === 'Cart'));
+      setSaveForLaterItems(data.filter(e => e.cartStatus === 'Save For Later'));
+      setWishlistItems(data.filter(e => e.cartStatus === 'Wishlist'));
+    });
+    
+  }
+
+  const itemIsInCart = (itemId) => {
+    return cartItems.find(e => e.course._id === itemId) ? true : false;
+  }
+  const itemIsItEnrolled = (itemId) => {
+    return enrolledcourse.find(e => e.courseId._id === itemId) ? true : false;
+  }
   const addToCart = async (e, courseId) => {
     e.preventDefault();
     const res = await fetch("/api/addtocart", {
@@ -21,13 +52,17 @@ function CourseCard({ item }) {
       })
     });
 
+
+
+
     const data = await res.json();
     if (res.status === 422 || !data) {
       console.log("Invalid.");
     } else {
       console.log("Successfully Added.");
-      navigate("/cart");
+      getAllData();
     }
+
 
   }
   return (
@@ -65,16 +100,40 @@ function CourseCard({ item }) {
               </Card.Text>
             </Link>
             <Stack direction="horizontal" gap={3} className="mt-3">
-              <Button variant="success" className="w-100 me-auto"
-              onClick={e=>addToCart(e,item._id)}
-              ><i className="fas fa-cart-plus"></i> Add To Cart</Button>
-              <span
-                className="text-danger float-end pt-1 spanWisListBtn"
-                title="Add To Wish List"
-                onMouseEnter={() => setWish("fas")}
-                onMouseLeave={() => setWish("far")}>
-                <i className={wish + " fa-heart fs-3"}></i>
-              </span>
+
+              {itemIsItEnrolled(item._id) ?
+                <Button variant="success" className="w-100 "
+                  onClick={e => navigate("/learner/course/" + item._id)}
+                ><i className="fas fa"></i>Resume</Button>
+                :
+                itemIsInCart(item._id) ?
+                  <>
+                    <Button variant="success" className="w-100 me-auto"
+                      onClick={e => navigate("/cart")}
+                    ><i className="fas fa"></i> Go To Cart</Button>
+                    <span
+                      className="text-danger float-end pt-1 spanWisListBtn"
+                      title="Add To Wish List"
+                      onMouseEnter={() => setWish("fas")}
+                      onMouseLeave={() => setWish("far")}>
+                      <i className={wish + " fa-heart fs-3"}></i>
+                    </span>
+                  </>
+                  :
+                  <>
+                    <Button variant="success" className="w-100 me-auto"
+                      onClick={e => addToCart(e, item._id)}
+                    ><i className="fas fa-cart-plus"></i> Add To Cart</Button>
+                    <span
+                      className="text-danger float-end pt-1 spanWisListBtn"
+                      title="Add To Wish List"
+                      onMouseEnter={() => setWish("fas")}
+                      onMouseLeave={() => setWish("far")}>
+                      <i className={wish + " fa-heart fs-3"}></i>
+                    </span>
+                  </>
+
+              }
             </Stack>
 
           </Card.Body>

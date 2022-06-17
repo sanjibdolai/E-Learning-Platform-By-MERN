@@ -4,7 +4,6 @@ function SearchBar({style, onClick}) {
     const btnClick=()=>{
         alert("Coming Soon...");
     }
-    console.log("SearchBar");
     return (
         <Form.Group className="w-auto" style={style} >
         <InputGroup>

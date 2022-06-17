@@ -3,7 +3,8 @@ import { Col, Container, Row, Breadcrumb, Badge, Stack, Accordion, Button, ListG
 import ReactPlayer from "react-player";
 import Rating from "react-rating";
 import { Link, useParams } from "react-router-dom";
-import { currencyFormat, minutesToHoursMinutes,getTotalCourseDuration ,getTotalLessions} from "../utilities/util";
+import { currencyFormat, minutesToHoursMinutes, getTotalCourseDuration, getTotalLessions } from "../utilities/util";
+import Feedback from "./Feedback";
 function CustomToggle({ children, eventKey, callback }) {
     const { activeEventKey } = useContext(AccordionContext);
     const decoratedOnClick = useAccordionButton(
@@ -21,7 +22,7 @@ function CustomToggle({ children, eventKey, callback }) {
             onClick={decoratedOnClick}
             style={{ backgroundColor: isCurrentEventKey ? 'pink' : 'lavender' }}
         >
-            <i className={isCurrentEventKey ? "mt-2 fa-solid fa-angles-up" : "mt-2 fa-solid fa-angles-down"}></i>
+            <i className={isCurrentEventKey ? "fa-solid fa-angles-up" : "fa-solid fa-angles-down"}></i>
             {children}
         </Stack>
     );
@@ -29,15 +30,16 @@ function CustomToggle({ children, eventKey, callback }) {
 
 function Course() {
     const [course, setCourse] = useState();
+    
     const [instructorCourses, setInstructorCourses] = useState({});
     const [previewLession, setPreviewLession] = useState({ showPreviewModal: false, lession: null });
     const params = useParams();
     const [wish, setWish] = useState("far");
-    
-   
+
+
     const getTotalTopicDuration = (topicId) => {
         let totalDuration = 0;
-        const topic1=course.topics.find(item=> item._id===topicId).lessions.forEach(lession => {
+        const topic1 = course.topics.find(item => item._id === topicId).lessions.forEach(lession => {
             totalDuration += lession.lessionDuration;
         });
         return minutesToHoursMinutes(totalDuration);
@@ -67,6 +69,7 @@ function Course() {
 
     }
 
+    
     useEffect(() => {
         getCourseDetails();
     }, []);
@@ -219,168 +222,8 @@ function Course() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col >
-
-                                <h3>Student Feedback</h3>
-                                <Stack direction="horizontal" gap={3}>
-                                    <div>
-                                        <Stack direction="vertical" gap={0} >
-                                            <h1>4.7</h1>
-                                            <Rating
-                                                readonly={true}
-                                                initialRating={3.7}
-                                                emptySymbol={"fa-regular fa-star text-warning fs-6"}
-                                                fullSymbol={"fa-solid fa-star text-warning fs-6"} />
-                                            <span>Course Rating</span>
-                                        </Stack>
-                                    </div>
-                                    <Stack direction="vertical" gap={2} >
-                                        <Stack direction="horizontal" gap={2}>
-                                            <ProgressBar style={{ "width": "75%" }} variant="warning" now={50} className="me-auto" />
-                                            <Rating
-                                                readonly={true}
-                                                initialRating={5}
-                                                emptySymbol={"fa-regular fa-star text-warning fs-6"}
-                                                fullSymbol={"fa-solid fa-star text-warning fs-6"} />
-                                        </Stack>
-                                        <Stack direction="horizontal" gap={2}>
-                                            <ProgressBar style={{ "width": "75%" }} variant="warning" now={20} className="me-auto" />
-                                            <Rating
-                                                readonly={true}
-                                                initialRating={4}
-                                                emptySymbol={"fa-regular fa-star text-warning fs-6"}
-                                                fullSymbol={"fa-solid fa-star text-warning fs-6"} />
-                                        </Stack>
-                                        <Stack direction="horizontal" gap={2}>
-                                            <ProgressBar style={{ "width": "75%" }} variant="warning" now={15} className="me-auto" />
-                                            <Rating
-                                                readonly={true}
-                                                initialRating={3}
-                                                emptySymbol={"fa-regular fa-star text-warning fs-6"}
-                                                fullSymbol={"fa-solid fa-star text-warning fs-6"} />
-                                        </Stack>
-                                        <Stack direction="horizontal" gap={2}>
-                                            <ProgressBar style={{ "width": "75%" }} variant="warning" now={10} className="me-auto" />
-                                            <Rating
-                                                readonly={true}
-                                                initialRating={2}
-                                                emptySymbol={"fa-regular fa-star text-warning fs-6"}
-                                                fullSymbol={"fa-solid fa-star text-warning fs-6"} />
-                                        </Stack>
-                                        <Stack direction="horizontal" gap={2}>
-                                            <ProgressBar style={{ "width": "75%" }} variant="warning" now={5} className="me-auto" />
-                                            <Rating
-                                                readonly={true}
-                                                initialRating={1}
-                                                emptySymbol={"fa-regular fa-star text-warning fs-6"}
-                                                fullSymbol={"fa-solid fa-star text-warning fs-6"} />
-                                        </Stack>
-                                    </Stack>
-                                </Stack>
-                            </Col>
-                        </Row>
-                        <Row className="mt-3">
                             <Col>
-                                <h3>Reviews</h3>
-
-                                <ListGroup variant="flush">
-                                    <ListGroup.Item>
-
-                                        <Stack
-                                            direction="horizontal"
-                                            gap={3}
-                                            className="my-3"
-                                        >
-
-                                            <Image
-                                                alt="Logo"
-                                                src="/logo.png"
-                                                width="60rem"
-                                                height="60rem"
-                                                roundedCircle={true}
-                                                className="mt-0"
-                                            />
-                                            <Stack direction="vertical" gap={2}>
-                                                <span className="fs-5"><b>Sanjib Dolai</b></span>
-                                                <div>
-                                                    <Rating
-                                                        readonly={true}
-                                                        initialRating={3.7}
-                                                        emptySymbol={"fa-regular fa-star text-warning fs-6"}
-                                                        fullSymbol={"fa-solid fa-star text-warning fs-6"} />
-                                                    <span> a month ago</span>
-                                                </div>
-                                                <span>Its great learning experience</span>
-                                                <small>Was this review helpful?</small>
-
-                                            </Stack>
-                                        </Stack>
-                                    </ListGroup.Item>
-                                    <ListGroup.Item>
-
-                                        <Stack
-                                            direction="horizontal"
-                                            gap={3}
-                                            className="my-3"
-                                        >
-
-                                            <Image
-                                                alt="Logo"
-                                                src="/logo.png"
-                                                width="60rem"
-                                                height="60rem"
-                                                roundedCircle={true}
-                                                className="mt-0"
-                                            />
-                                            <Stack direction="vertical" gap={2}>
-                                                <span className="fs-5"><b>Sanjib Dolai</b></span>
-                                                <div>
-                                                    <Rating
-                                                        readonly={true}
-                                                        initialRating={3.7}
-                                                        emptySymbol={"fa-regular fa-star text-warning fs-6"}
-                                                        fullSymbol={"fa-solid fa-star text-warning fs-6"} />
-                                                    <span> a month ago</span>
-                                                </div>
-                                                <span>Its great learning experience</span>
-                                                <small>Was this review helpful?</small>
-
-                                            </Stack>
-                                        </Stack>
-                                    </ListGroup.Item>
-                                    <ListGroup.Item>
-
-                                        <Stack
-                                            direction="horizontal"
-                                            gap={3}
-                                            className="my-3"
-                                        >
-
-                                            <Image
-                                                alt="Logo"
-                                                src="/logo.png"
-                                                width="60rem"
-                                                height="60rem"
-                                                roundedCircle={true}
-                                                className="mt-0"
-                                            />
-                                            <Stack direction="vertical" gap={2}>
-                                                <span className="fs-5"><b>Sanjib Dolai</b></span>
-                                                <div>
-                                                    <Rating
-                                                        readonly={true}
-                                                        initialRating={3.7}
-                                                        emptySymbol={"fa-regular fa-star text-warning fs-6"}
-                                                        fullSymbol={"fa-solid fa-star text-warning fs-6"} />
-                                                    <span> a month ago</span>
-                                                </div>
-                                                <span>Its great learning experience</span>
-                                                <small>Was this review helpful?</small>
-
-                                            </Stack>
-                                        </Stack>
-                                    </ListGroup.Item>
-                                </ListGroup>
+                                <Feedback courseId={params.id}  />
                             </Col>
                         </Row>
                     </Col>
@@ -395,7 +238,7 @@ function Course() {
                                     <span className="fs-3 me-2">{currencyFormat(course.coursePrice)} </span>
                                     <span className="text-decoration-line-through me-2">{currencyFormat(3484)} </span>
                                     <span>52% off</span><br />
-                                    <span><i class="fa-solid fa-clock"></i> 2 days left at this price!</span>
+                                    <span><i className="fa-solid fa-clock"></i> 2 days left at this price!</span>
                                 </Card.Text>
 
                                 <Stack direction="horizontal" gap={3} className="mt-3">
